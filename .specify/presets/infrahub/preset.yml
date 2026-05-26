@@ -1,23 +1,37 @@
 schema_version: "1.0"
+
 preset:
   id: "infrahub"
   name: "Infrahub Workflow Routing"
-  version: "1.0.0"
-  description: "Routes speckit commands to Infrahub-specific templates when .infrahub.yml is detected. Includes connectivity gating via infrahubctl info and multi-artifact dependency ordering."
+  version: "2.0.0"
+  description: "Wraps speckit commands with Infrahub artifact routing and mandatory skill invocation when .infrahub.yml is detected. Uses v0.8.0 wrap composition so upstream command bodies are inherited automatically."
   author: "opsmill"
-  repository: "https://github.com/opsmill/infrahub-template"
+  repository: "https://github.com/opsmill/speckit-infrahub"
   license: "Apache-2.0"
+
 requires:
-  speckit_version: ">=0.4.1"
-  extensions:
-    - "infrahub"
+  speckit_version: ">=0.8.0"
+
 provides:
   templates:
     - type: "command"
       name: "speckit.specify"
       file: "commands/speckit.specify.md"
-      description: "Specification command with Infrahub artifact routing"
-      replaces: "speckit.specify"
+      description: "Specify wrapped with Infrahub artifact detection, connectivity gating, and skill invocation"
+      strategy: "wrap"
+
+    - type: "command"
+      name: "speckit.plan"
+      file: "commands/speckit.plan.md"
+      description: "Plan wrapped with mandatory Infrahub skill invocation before design artifacts"
+      strategy: "wrap"
+
+    - type: "command"
+      name: "speckit.implement"
+      file: "commands/speckit.implement.md"
+      description: "Implement wrapped with mandatory Infrahub skill invocation before artifact tasks"
+      strategy: "wrap"
+
 tags:
   - "infrahub"
   - "infrastructure"
