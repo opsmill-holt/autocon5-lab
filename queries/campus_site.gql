@@ -1,0 +1,30 @@
+query CampusSite($shortname: String!) {
+  LocationSite(shortname__value: $shortname) {
+    edges {
+      node {
+        id
+        shortname {
+          value
+        }
+        design {
+          node {
+            ... on OtnCampusSite {
+              router_count {
+                value
+              }
+              access_switch_count {
+                value
+              }
+              distribution_switch_count {
+                value
+              }
+              bgp_asn {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

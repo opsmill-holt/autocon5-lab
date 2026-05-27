@@ -1,0 +1,31 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    # Amsterdam Site 01 — medium campus: 1 router, 1 dist switch, 2 access switches
+    - name: AMS-RTR-01
+      status: active
+      role: edge
+      location: ams-01
+      device_type: ISR4451
+      platform: IOS-XE
+
+    - name: AMS-DSW-01
+      status: active
+      location: ams-01
+      device_type: C9300-48P
+      platform: IOS
+
+    - name: AMS-ASW-01
+      status: active
+      location: ams-01
+      device_type: C9300-24P
+      platform: IOS
+
+    - name: AMS-ASW-02
+      status: active
+      location: ams-01
+      device_type: C9300-24P
+      platform: IOS
