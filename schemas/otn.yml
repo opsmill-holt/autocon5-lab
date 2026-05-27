@@ -31,8 +31,51 @@ generics:
         kind: Number
         optional: true
         order_weight: 1300
+    relationships:
+      - name: device_entries
+        peer: OtnDesignDeviceEntry
+        kind: Component
+        cardinality: many
+        optional: true
+        on_delete: cascade
+        identifier: design__device_entries
+        order_weight: 2000
 
 nodes:
+  - name: DesignDeviceEntry
+    namespace: Otn
+    label: Design Device Entry
+    description: Links a site design to a device template with a desired instance count.
+    icon: mdi:counter
+    include_in_menu: false
+    human_friendly_id:
+      - design__name__value
+      - template__template_name__value
+    order_by:
+      - template__template_name__value
+    attributes:
+      - name: count
+        kind: Number
+        default_value: 1
+        order_weight: 1000
+    relationships:
+      - name: design
+        peer: OtnSiteDesign
+        kind: Attribute
+        cardinality: one
+        optional: false
+        on_delete: no-action
+        identifier: design__device_entries
+        order_weight: 2000
+      - name: template
+        peer: TemplateDcimDevice
+        kind: Attribute
+        cardinality: one
+        optional: false
+        on_delete: no-action
+        identifier: device_template__entries
+        order_weight: 2100
+
   - name: CampusSite
     namespace: Otn
     label: Campus Site Design

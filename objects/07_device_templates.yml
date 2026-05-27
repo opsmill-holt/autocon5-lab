@@ -1,0 +1,65 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: TemplateDcimDevice
+  data:
+    - template_name: border-router
+      status: active
+      role: edge
+      platform: IOS-XE
+      device_type: ISR4451
+      interfaces:
+        kind: TemplateInterfacePhysical
+        data:
+          - template_name: border-router_GigabitEthernet0/0
+            name: GigabitEthernet0/0
+            role: upstream
+          - template_name: border-router_GigabitEthernet0/1
+            name: GigabitEthernet0/1
+            role: upstream
+
+    - template_name: distribution-switch
+      status: active
+      platform: IOS
+      device_type: C9300-48P
+      interfaces:
+        kind: TemplateInterfacePhysical
+        parameters:
+          expand_range: true
+        data:
+          - template_name: distribution-switch_GigabitEthernet1/0/[1-4]
+            name: GigabitEthernet1/0/[1-4]
+            role: access
+
+    - template_name: access-switch
+      status: active
+      platform: IOS
+      device_type: C9300-24P
+      interfaces:
+        kind: TemplateInterfacePhysical
+        parameters:
+          expand_range: true
+        data:
+          - template_name: access-switch_GigabitEthernet0/[1-4]
+            name: GigabitEthernet0/[1-4]
+            role: access
+
+---
+# Loopback interfaces (virtual) — one per device template
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: TemplateInterfaceVirtual
+  data:
+    - template_name: border-router_Loopback0
+      name: Loopback0
+      device: border-router
+
+    - template_name: distribution-switch_Loopback0
+      name: Loopback0
+      device: distribution-switch
+
+    - template_name: access-switch_Loopback0
+      name: Loopback0
+      device: access-switch

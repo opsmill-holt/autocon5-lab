@@ -1,5 +1,6 @@
 schema-library/
-schemas/base/
+schemas/base/*
+!schemas/base/dcim.yml
 schemas/location_minimal/
 
 # Byte-compiled / optimized / DLL files
