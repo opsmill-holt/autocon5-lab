@@ -455,30 +455,18 @@ nodes:
         optional: true
         order_weight: 1400
         choices:
-          - name: core
-            label: Core Router
-            description: Central part of the network.
-            color: "#7f7fff"
-          - name: edge
-            label: Edge Router
-            description: Network boundary with external networks.
+          - name: router
+            label: Router
+            description: Edge or border router connecting to upstream networks.
             color: "#bf7fbf"
-          - name: cpe
-            label: Customer Premise Equipment
-            description: Devices located at the customer's premises.
-            color: "#bf7f7f"
-          - name: spine
-            label: Spine Router
-            description: Aggregation router part of a Fabric.
-            color: "#aeeeee"
-          - name: leaf
-            label: Leaf Switch
-            description: Top of Rack part of a Fabric.
-            color: "#e6e6fa"
-          - name: tor
-            label: Tor Switch
-            description: Tor switch part of a Fabric.
-            color: "#e8e7fd"
+          - name: distribution
+            label: Distribution Switch
+            description: Aggregation layer switch connecting access to core.
+            color: "#a9cce3"
+          - name: access
+            label: Access Switch
+            description: Edge layer switch providing end-device connectivity.
+            color: "#a9dfbf"
 
   - name: Physical
     namespace: Interface

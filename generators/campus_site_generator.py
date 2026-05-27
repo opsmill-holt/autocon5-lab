@@ -1,92 +1,48 @@
 from infrahub_sdk.generator import InfrahubGenerator
 
-ROLE_INTERFACES: dict[str, list[str]] = {
-    "RTR": ["Loopback0", "GigabitEthernet0/0", "GigabitEthernet0/1"],
-    "DSW": ["Loopback0", "GigabitEthernet1/0/1", "GigabitEthernet1/0/2", "GigabitEthernet1/0/3", "GigabitEthernet1/0/4"],
-    "ASW": ["Loopback0", "GigabitEthernet0/1", "GigabitEthernet0/2", "GigabitEthernet0/3", "GigabitEthernet0/4"],
-}
-
-ROLE_DEVICE_TYPE: dict[str, str] = {
-    "RTR": "ISR4451",
-    "DSW": "C9300-48P",
-    "ASW": "C9300-24P",
-}
-
-ROLE_PLATFORM: dict[str, str] = {
-    "RTR": "IOS-XE",
-    "DSW": "IOS",
-    "ASW": "IOS",
-}
-
-ROLE_DEVICE_ROLE: dict[str, str | None] = {
-    "RTR": "edge",
-    "DSW": None,
-    "ASW": None,
+ROLE_CODE = {
+    "router": "RTR",
+    "distribution": "DSW",
+    "access": "ASW",
 }
 
 
 class CampusSiteGenerator(InfrahubGenerator):
-    """Design-driven generator: reads a LocationSite's design and provisions devices."""
 
     async def generate(self, data: dict) -> None:
-        edges = data["LocationSite"]["edges"]
-        if not edges:
+        site = data["LocationSite"]["edges"][0]["node"]
+        site_id = site["id"]
+        site_code = site["shortname"]["value"].upper()
+
+        design = site["design"]["node"]
+        if not design or "device_entries" not in design:
             return
 
-        site_node = edges[0]["node"]
-        site_id = site_node["id"]
-        site_shortname = site_node["shortname"]["value"]
-        site_code = site_shortname.split("-")[0].upper()
+        # Track how many devices of each role we've created (for hostname numbering)
+        role_counters = {}
 
-        design = site_node["design"]["node"]
-        if design is None:
-            return
+        for entry in design["device_entries"]["edges"]:
+            count = entry["node"]["count"]["value"]
+            template = entry["node"]["template"]["node"]
+            role = template["role"]["value"]
+            template_id = template["id"]
 
-        roles = [
-            ("RTR", design["router_count"]["value"]),
-            ("DSW", design["distribution_switch_count"]["value"]),
-            ("ASW", design["access_switch_count"]["value"]),
-        ]
+            role_code = ROLE_CODE.get(role, role.upper())
+            role_counters[role_code] = role_counters.get(role_code, 0)
 
-        device_type_cache: dict[str, str] = {}
-        platform_cache: dict[str, str] = {}
+            for _ in range(count):
+                role_counters[role_code] += 1
+                hostname = f"{site_code}-{role_code}-{role_counters[role_code]:02d}"
 
-        for role, count in roles:
-            if count == 0:
-                continue
-
-            for idx in range(1, count + 1):
-                hostname = f"{site_code}-{role}-{idx:02d}"
-
-                if role not in device_type_cache:
-                    dt = await self.client.get(kind="DcimDeviceType", name__value=ROLE_DEVICE_TYPE[role])
-                    device_type_cache[role] = dt.id
-
-                if role not in platform_cache:
-                    plat = await self.client.get(kind="DcimPlatform", name__value=ROLE_PLATFORM[role])
-                    platform_cache[role] = plat.id
-
-                device_data: dict = {
-                    "name": hostname,
-                    "status": "active",
-                    "location": site_id,
-                    "device_type": device_type_cache[role],
-                    "platform": platform_cache[role],
-                }
-                if ROLE_DEVICE_ROLE[role]:
-                    device_data["role"] = ROLE_DEVICE_ROLE[role]
-
-                device = await self.client.create(kind="DcimDevice", data=device_data)
+                device = await self.client.create(
+                    kind="DcimDevice",
+                    data={
+                        "name": hostname,
+                        "status": "active",
+                        "role": role,
+                        "location": site_id,
+                        "object_template": {"id": template_id},
+                    },
+                )
                 await device.save(allow_upsert=True)
-
-                for iface_name in ROLE_INTERFACES.get(role, []):
-                    iface_kind = "InterfaceVirtual" if iface_name.startswith("Loopback") else "InterfacePhysical"
-                    iface = await self.client.create(
-                        kind=iface_kind,
-                        data={
-                            "name": iface_name,
-                            "device": device.id,
-                            "status": "active",
-                        },
-                    )
-                    await iface.save(allow_upsert=True)
+                self.logger.info("Created device: %s", hostname)

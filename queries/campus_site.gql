@@ -9,17 +9,25 @@ query CampusSite($shortname: String!) {
         design {
           node {
             ... on OtnCampusSite {
-              router_count {
-                value
-              }
-              access_switch_count {
-                value
-              }
-              distribution_switch_count {
-                value
-              }
               bgp_asn {
                 value
+              }
+              device_entries {
+                edges {
+                  node {
+                    count {
+                      value
+                    }
+                    template {
+                      node {
+                        id
+                        role {
+                          value
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }

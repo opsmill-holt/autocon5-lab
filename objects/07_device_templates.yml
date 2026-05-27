@@ -6,7 +6,7 @@ spec:
   data:
     - template_name: border-router
       status: active
-      role: edge
+      role: router
       platform: IOS-XE
       device_type: ISR4451
       interfaces:
@@ -21,6 +21,7 @@ spec:
 
     - template_name: distribution-switch
       status: active
+      role: distribution
       platform: IOS
       device_type: C9300-48P
       interfaces:
@@ -34,6 +35,7 @@ spec:
 
     - template_name: access-switch
       status: active
+      role: access
       platform: IOS
       device_type: C9300-24P
       interfaces:

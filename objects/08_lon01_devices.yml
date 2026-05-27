@@ -6,51 +6,33 @@ spec:
   data:
     # London Site 01 — large campus: 2 routers, 2 dist switches, 4 access switches
     - name: LON-RTR-01
-      status: active
-      role: edge
+      object_template: border-router
       location: lon-01
-      device_type: ISR4451
-      platform: IOS-XE
 
     - name: LON-RTR-02
-      status: active
-      role: edge
+      object_template: border-router
       location: lon-01
-      device_type: ISR4451
-      platform: IOS-XE
 
     - name: LON-DSW-01
-      status: active
+      object_template: distribution-switch
       location: lon-01
-      device_type: C9300-48P
-      platform: IOS
 
     - name: LON-DSW-02
-      status: active
+      object_template: distribution-switch
       location: lon-01
-      device_type: C9300-48P
-      platform: IOS
 
     - name: LON-ASW-01
-      status: active
+      object_template: access-switch
       location: lon-01
-      device_type: C9300-24P
-      platform: IOS
 
     - name: LON-ASW-02
-      status: active
+      object_template: access-switch
       location: lon-01
-      device_type: C9300-24P
-      platform: IOS
 
     - name: LON-ASW-03
-      status: active
+      object_template: access-switch
       location: lon-01
-      device_type: C9300-24P
-      platform: IOS
 
     - name: LON-ASW-04
-      status: active
+      object_template: access-switch
       location: lon-01
-      device_type: C9300-24P
-      platform: IOS

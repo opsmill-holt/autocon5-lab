@@ -23,10 +23,6 @@ generics:
         kind: Text
         optional: true
         order_weight: 1100
-      - name: router_count
-        kind: Number
-        default_value: 1
-        order_weight: 1200
       - name: bgp_asn
         kind: Number
         optional: true
@@ -40,6 +36,14 @@ generics:
         on_delete: cascade
         identifier: design__device_entries
         order_weight: 2000
+      - name: sites
+        label: Sites Using This Design
+        peer: LocationSite
+        cardinality: many
+        kind: Generic
+        optional: true
+        identifier: location_site__design
+        order_weight: 2100
 
 nodes:
   - name: DesignDeviceEntry
@@ -89,15 +93,6 @@ nodes:
     human_friendly_id:
       - name__value
     display_label: name__value
-    attributes:
-      - name: access_switch_count
-        kind: Number
-        default_value: 1
-        order_weight: 1500
-      - name: distribution_switch_count
-        kind: Number
-        default_value: 0
-        order_weight: 1600
 
   - name: DataCenterSite
     namespace: Otn
@@ -112,19 +107,6 @@ nodes:
     human_friendly_id:
       - name__value
     display_label: name__value
-    attributes:
-      - name: spine_count
-        kind: Number
-        default_value: 2
-        order_weight: 1500
-      - name: leaf_count
-        kind: Number
-        default_value: 4
-        order_weight: 1600
-      - name: border_leaf_count
-        kind: Number
-        default_value: 2
-        order_weight: 1700
 
 extensions:
   nodes:

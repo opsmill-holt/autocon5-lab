@@ -6,7 +6,3 @@ spec:
   data:
     - name: dc-standard
       description: Standard data center design — 2 spine, 4 leaf, 2 border-leaf
-      router_count: 0
-      spine_count: 2
-      leaf_count: 4
-      border_leaf_count: 2

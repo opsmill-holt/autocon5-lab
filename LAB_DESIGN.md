@@ -46,12 +46,14 @@ Two existing OtterNet sites are pre-loaded by the bootstrap script:
 
 ## Site Design Tiers
 
-| Tier | Devices created by Generator |
-|------|------------------------------|
-| Small campus | 1× router, 1× access switch |
-| Medium campus | 1× router, 1× distribution switch, 2× access switches |
-| Large campus | 2× routers, 2× distribution switches, 4× access switches |
-| DC | 2× spine, 4× leaf, 2× border-leaf |
+Device counts are stored as `OtnDesignDeviceEntry` records linked to each design, not as fixed attributes.
+
+| Design | Type | Device entries |
+|--------|------|----------------|
+| `small-campus` | `OtnCampusSite` | 1× border-router, 1× access-switch |
+| `medium-campus` | `OtnCampusSite` | 1× border-router, 1× distribution-switch, 2× access-switches |
+| `large-campus` | `OtnCampusSite` | 2× border-router, 2× distribution-switch, 4× access-switches |
+| `dc-standard` | `OtnDataCenterSite` | 2× spine, 4× leaf, 2× border-leaf |
 
 ---
 
@@ -61,9 +63,13 @@ Base nodes (locations, devices, interfaces) are loaded from the **Infrahub schem
 
 OtterNet-specific schema uses **generics and inheritance**:
 
-- `SiteDesign` — Infrahub generic (abstract base: `name`, `description`, `router_count`)
-  - `CampusSite` — inherits from `SiteDesign`; adds `access_switch_count`, `distribution_switch_count`
-  - `DataCenterSite` — inherits from `SiteDesign`; adds `spine_count`, `leaf_count`, `border_leaf_count`
+- `OtnSiteDesign` — Infrahub generic (abstract base: `name`, `description`, `bgp_asn`)
+  - `OtnCampusSite` — inherits from `OtnSiteDesign`; also inherits `CoreArtifactTarget` (enables config artifact generation)
+  - `OtnDataCenterSite` — inherits from `OtnSiteDesign`; also inherits `CoreArtifactTarget`
+
+- `OtnDesignDeviceEntry` — join node that links a design to a `TemplateDcimDevice` with a `count`; owned by the design via a `Component` relationship (cascade-deleted with the design)
+
+- `LocationSite` is extended with a `design` relationship pointing to `OtnSiteDesign`, linking a physical site to its design blueprint
 
 ---
 
@@ -87,12 +93,15 @@ invoke load-objects              # load OtterNet seed data
 
 Students extend the schema with OtterNet-specific design nodes:
 
-1. Create the `SiteDesign` generic with shared base fields
-2. Create `CampusSite` inheriting from `SiteDesign`
-3. Create `DataCenterSite` inheriting from `SiteDesign`
-4. Populate 3 campus design instances (small, medium, large) + 1 DC design instance
+1. Create the `OtnSiteDesign` generic with shared base fields (`name`, `description`, `bgp_asn`)
+2. Create `OtnCampusSite` inheriting from `OtnSiteDesign` (and `CoreArtifactTarget`)
+3. Create `OtnDataCenterSite` inheriting from `OtnSiteDesign` (and `CoreArtifactTarget`)
+4. Create `OtnDesignDeviceEntry` to link designs to device templates with a `count`
+5. Extend `LocationSite` with a `design` relationship
+6. Populate 3 campus design instances (small, medium, large) + 1 DC design instance, each with `OtnDesignDeviceEntry` records that map to the correct device templates and counts
+7. Link `lon-01` → `large-campus` and `ams-01` → `medium-campus`
 
-**Stretch goal:** Add additional fields to `CampusSite` (e.g. firewall count, uplink speed).
+**Stretch goal:** Add additional attributes to `OtnSiteDesign` (e.g. uplink speed, firewall flag).
 **Bonus:** Design a second generic hierarchy for a new service type.
 
 ---
