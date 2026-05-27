@@ -1,0 +1,8 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: OrganizationManufacturer
+  data:
+    - name: Cisco
+      description: Cisco Systems — network hardware manufacturer

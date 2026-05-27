@@ -1,4 +1,6 @@
 schema-library/
+schemas/base/
+schemas/location_minimal/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

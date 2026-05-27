@@ -1,0 +1,47 @@
+query RouterConfig($device_name: String!) {
+  DcimDevice(name__value: $device_name) {
+    edges {
+      node {
+        name {
+          value
+        }
+        location {
+          node {
+            ... on LocationSite {
+              shortname {
+                value
+              }
+              design {
+                node {
+                  bgp_asn {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+        interfaces(limit: 50) {
+          edges {
+            node {
+              name {
+                value
+              }
+              ... on InterfaceLayer3 {
+                ip_addresses {
+                  edges {
+                    node {
+                      address {
+                        value
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

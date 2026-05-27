@@ -1,0 +1,19 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimPlatform
+  data:
+    - name: IOS-XE
+      description: Cisco IOS-XE (routers)
+      manufacturer: Cisco
+      nornir_platform: ios
+      napalm_driver: ios
+      netmiko_device_type: cisco_ios
+
+    - name: IOS
+      description: Cisco IOS (switches)
+      manufacturer: Cisco
+      nornir_platform: ios
+      napalm_driver: ios
+      netmiko_device_type: cisco_ios
