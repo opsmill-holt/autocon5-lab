@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "presets": {
+    "infrahub": {
+      "version": "2.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:be87209a181dd6280861028ea46ea8adf1161731fa280a90971cd610f870491a",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "agy": [
+          "speckit.specify",
+          "speckit.plan",
+          "speckit.implement"
+        ],
+        "claude": [
+          "speckit.specify",
+          "speckit.plan",
+          "speckit.implement"
+        ],
+        "codex": [
+          "speckit.specify",
+          "speckit.plan",
+          "speckit.implement"
+        ]
+      },
+      "registered_skills": [
+        "speckit-specify",
+        "speckit-plan",
+        "speckit-implement"
+      ],
+      "installed_at": "2026-05-26T17:00:06.488190+00:00"
+    }
+  }
+}

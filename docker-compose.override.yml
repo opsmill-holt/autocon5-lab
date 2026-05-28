@@ -1,0 +1,5 @@
+---
+services:
+  task-worker:
+    volumes:
+      - ./:/upstream
