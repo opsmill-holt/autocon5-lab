@@ -72,7 +72,7 @@ OtterNet-specific schema uses **generics and inheritance**:
 - `LocationSite` is extended with:
   - `design` — relationship to `OtnSiteDesign`, linking a physical site to its design blueprint
   - `bgp_asn` — allocated by the Generator from a `CoreNumberPool` (not stored on the design)
-  - `mgmt_pool` — relationship to `CoreIPAddressPool`, used by the Generator to allocate management IPs
+  - `mgmt_prefix` — relationship to `IpamPrefix` (the site's `/24` management subnet); the Generator looks up the `CoreIPAddressPool` that references this prefix and allocates IPs from it
 
 - `DcimGenericDevice` has a **computed attribute** `fqdn` — dynamically calculated as `{{ name }}.{{ location__shortname }}.otternet.net`. This is never stored manually; Infrahub computes it on read.
 
@@ -83,12 +83,13 @@ Pre-loaded alongside locations and devices:
 | Object | Kind | Purpose |
 |--------|------|---------|
 | `172.16.0.0/16` | `IpamPrefix` (supernet) | OtterNet management address space |
-| `172.16.1.0/24` | `IpamPrefix` (management) | LON site management subnet |
-| `172.16.2.0/24` | `IpamPrefix` (management) | AMS site management subnet |
-| `172.16.3.0/24` | `IpamPrefix` (management) | MUC site management subnet |
-| `lon-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for LON devices |
-| `ams-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for AMS devices |
-| `muc-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for MUC devices |
+| `172.16.0.0/24` | `IpamPrefix` (management) | LON site management subnet |
+| `172.16.1.0/24` | `IpamPrefix` (management) | AMS site management subnet |
+| `172.16.2.0/24` | `IpamPrefix` (management) | MUC site management subnet |
+| `lon-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for LON devices (resources: `172.16.0.0/24`) |
+| `ams-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for AMS devices (resources: `172.16.1.0/24`) |
+| `muc-mgmt-pool` | `CoreIPAddressPool` | Allocates management IPs for MUC devices (resources: `172.16.2.0/24`) |
+| `otn-mgmt-prefix-pool` | `CoreIPPrefixPool` | Allocates `/24` management subnets from `172.16.0.0/16` for new sites |
 | `otn-asn-pool` | `CoreNumberPool` | Private ASN range 65000–65534; one ASN allocated per deployed site |
 
 ---
@@ -117,7 +118,7 @@ Students extend the schema with OtterNet-specific design nodes:
 2. Create `OtnCampusSite` inheriting from `OtnSiteDesign` (and `CoreArtifactTarget`)
 3. Create `OtnDataCenterSite` inheriting from `OtnSiteDesign` (and `CoreArtifactTarget`)
 4. Create `OtnDesignDeviceEntry` to link designs to device templates with a `count`; add `min_count: 1` and `max_count: 8` — try setting `count: 0` to see schema enforcement fire immediately (no Python needed)
-5. Extend `LocationSite` with a `design` relationship, a `bgp_asn` Number attribute, and a `mgmt_pool` relationship to `CoreIPAddressPool`
+5. Extend `LocationSite` with a `design` relationship, a `bgp_asn` Number attribute, and a `mgmt_prefix` relationship to `IpamPrefix`
 6. Add a `fqdn` **computed attribute** to `DcimGenericDevice` using the template `{{ name }}.{{ location__shortname }}.otternet.net` — Infrahub calculates this dynamically on every read; it is never stored manually
 7. Populate 3 campus design instances (small, medium, large) + 1 DC design instance, each with `OtnDesignDeviceEntry` records that map to the correct device templates and counts
 8. Link `lon-01` → `large-campus` and `ams-01` → `medium-campus`
@@ -169,13 +170,14 @@ The Generator reads a `CampusSite` design object and produces:
 - Device objects (named by convention, e.g. `MUC-RTR-01`, `MUC-ASW-01`)
 - Interface objects linked to each device (from device template)
 - A unique BGP ASN allocated from `otn-asn-pool` (`CoreNumberPool`), written to `LocationSite.bgp_asn`
-- A management IP per device allocated from the site's `CoreIPAddressPool`, attached to the management interface and set as `primary_address`
+- A management IP per device allocated from the `CoreIPAddressPool` whose resources include the site's `mgmt_prefix`, attached to the management interface and set as `primary_address`
 - All devices added to the `device_config` group for artifact targeting
 
 **Resource allocation order in the Generator:**
 1. Allocate BGP ASN from `CoreNumberPool` — idempotent (same site always gets the same ASN)
-2. For each device: allocate management IP from site's `CoreIPAddressPool` — idempotent (same device always gets the same IP)
-3. Create/upsert device with `primary_address` set
+2. Resolve the `CoreIPAddressPool` whose resources include the site's `mgmt_prefix`
+3. For each device: allocate management IP from that pool using the hostname as identifier — idempotent (same hostname always returns the same IP)
+4. Create/upsert device with `primary_address` set
 
 **Guided tier:** Instruqt walks through each section line by line. [Infrahub Generator docs](https://docs.infrahub.app) linked as reference.
 **Stretch goal:** Extend the Generator to support `DataCenterSite`.
