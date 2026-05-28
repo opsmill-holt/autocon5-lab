@@ -21,8 +21,10 @@ query CampusSite($shortname: String!) {
                     template {
                       node {
                         id
-                        role {
-                          value
+                        ... on TemplateDcimDevice {
+                          role {
+                            value
+                          }
                         }
                       }
                     }
