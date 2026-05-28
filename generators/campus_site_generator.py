@@ -18,6 +18,23 @@ class CampusSiteGenerator(InfrahubGenerator):
         if not design or "device_entries" not in design:
             return
 
+        if not site.get("mgmt_pool") or not site["mgmt_pool"].get("node"):
+            raise ValueError(
+                f"Site {site_code!r} has no mgmt_pool set. "
+                "Create a CoreIPAddressPool for this site and link it via LocationSite.mgmt_pool before running the generator."
+            )
+
+        # Allocate BGP ASN from pool and write to site (idempotent)
+        site_node = await self.client.get(kind="LocationSite", id=site_id)
+        asn_pool = await self.client.get(kind="CoreNumberPool", name__value="otn-asn-pool")
+        site_node.bgp_asn = asn_pool
+        await site_node.save(allow_upsert=True)
+        self.logger.info("Allocated BGP ASN for site: %s", site_code)
+
+        # Get management IP pool for this site
+        mgmt_pool_id = site["mgmt_pool"]["node"]["id"]
+        mgmt_pool = await self.client.get(kind="CoreIPAddressPool", id=mgmt_pool_id)
+
         device_config_group = await self.client.get(kind="CoreStandardGroup", name__value="device_config")
 
         role_counters = {}
@@ -48,3 +65,13 @@ class CampusSiteGenerator(InfrahubGenerator):
                 )
                 await device.save(allow_upsert=True)
                 self.logger.info("Created device: %s", hostname)
+
+                # Allocate management IP (idempotent via hostname identifier)
+                mgmt_ip = await self.client.allocate_next_ip_address(
+                    resource_pool=mgmt_pool,
+                    identifier=hostname,
+                    data={"description": f"Management IP for {hostname}"},
+                )
+                device.primary_address = mgmt_ip
+                await device.save(allow_upsert=True)
+                self.logger.info("Allocated management IP for: %s", hostname)

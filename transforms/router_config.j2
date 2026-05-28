@@ -1,11 +1,18 @@
 {% set device = data["DcimDevice"]["edges"][0]["node"] %}
 {% set location = device["location"]["node"] %}
-{% set design = location.get("design", {}).get("node") if location else None %}
 ! Managed by OtterNet SoT
 ! Site: {{ location.get("shortname", {}).get("value", "unknown") if location else "unknown" }}
 !
 hostname {{ device["name"]["value"] }}
+fqdn {{ device["fqdn"]["value"] }}
 !
+{% if device.get("primary_address") and device["primary_address"].get("node") %}
+{% set mgmt_ip = device["primary_address"]["node"]["address"]["value"].split("/")[0] %}
+interface Management0
+ ip address {{ mgmt_ip }} 255.255.255.0
+ no shutdown
+!
+{% endif %}
 {% for iface_edge in device["interfaces"]["edges"] %}
 {% set iface = iface_edge["node"] %}
 interface {{ iface["name"]["value"] }}
@@ -18,8 +25,8 @@ interface {{ iface["name"]["value"] }}
  no shutdown
 !
 {% endfor %}
-{% if design and design.get("bgp_asn", {}).get("value") %}
-router bgp {{ design["bgp_asn"]["value"] }}
+{% if location and location.get("bgp_asn", {}).get("value") %}
+router bgp {{ location["bgp_asn"]["value"] }}
  bgp router-id {{ device["name"]["value"] }}
  bgp log-neighbor-changes
 !

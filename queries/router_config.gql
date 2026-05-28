@@ -5,18 +5,24 @@ query RouterConfig($device_name: String!) {
         name {
           value
         }
+        fqdn {
+          value
+        }
+        primary_address {
+          node {
+            address {
+              value
+            }
+          }
+        }
         location {
           node {
             ... on LocationSite {
               shortname {
                 value
               }
-              design {
-                node {
-                  bgp_asn {
-                    value
-                  }
-                }
+              bgp_asn {
+                value
               }
             }
           }
