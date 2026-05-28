@@ -8,10 +8,14 @@ spec:
     - name: LON-RTR-01
       object_template: border-router
       location: lon-01
+      member_of_groups:
+        - campus_routers
 
     - name: LON-RTR-02
       object_template: border-router
       location: lon-01
+      member_of_groups:
+        - campus_routers
 
     - name: LON-DSW-01
       object_template: distribution-switch

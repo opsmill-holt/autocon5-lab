@@ -6,3 +6,12 @@ spec:
   data:
     - name: campus_sites
       description: LocationSite instances managed by the campus site generator
+
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: CoreStandardGroup
+  data:
+    - name: campus_routers
+      description: Border router devices in campus sites — artifact generation targets

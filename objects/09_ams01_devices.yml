@@ -8,6 +8,8 @@ spec:
     - name: AMS-RTR-01
       object_template: border-router
       location: ams-01
+      member_of_groups:
+        - campus_routers
 
     - name: AMS-DSW-01
       object_template: distribution-switch
