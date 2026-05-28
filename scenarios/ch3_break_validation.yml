@@ -1,0 +1,18 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: LocationMetro
+  data:
+    - name: Bad Metro
+      shortname: bad-01
+      parent: uk
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    - name: my-router-01
+      status: active
+      location: bad-01

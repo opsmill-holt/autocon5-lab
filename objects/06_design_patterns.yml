@@ -6,12 +6,9 @@ spec:
   data:
     - name: small-campus
       description: Small campus design — 1 router, 1 access switch
-      bgp_asn: 65001
 
     - name: medium-campus
       description: Medium campus design — 1 router, 1 distribution switch, 2 access switches
-      bgp_asn: 65002
 
     - name: large-campus
       description: Large campus design — 2 routers, 2 distribution switches, 4 access switches
-      bgp_asn: 65003

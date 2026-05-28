@@ -76,6 +76,8 @@ def load_objects(ctx: Context) -> None:
     ctx.run("infrahubctl object load objects")
 
 
+
+
 @task
 def test(ctx: Context) -> None:
     """

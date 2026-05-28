@@ -1,0 +1,10 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: IpamPrefix
+  data:
+    - prefix: "172.16.0.0/16"
+      status: active
+      role: supernet
+      description: OtterNet management address space

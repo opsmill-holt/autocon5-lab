@@ -6,12 +6,14 @@ query CampusSite($shortname: String!) {
         shortname {
           value
         }
+        mgmt_pool {
+          node {
+            id
+          }
+        }
         design {
           node {
             ... on OtnCampusSite {
-              bgp_asn {
-                value
-              }
               device_entries {
                 edges {
                   node {
