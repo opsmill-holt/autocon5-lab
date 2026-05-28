@@ -10,22 +10,22 @@ spec:
       location: ams-01
       member_of_groups:
         - campus_routers
-        - all_campus_devices
+        - device_config
 
     - name: AMS-DSW-01
       object_template: distribution-switch
       location: ams-01
       member_of_groups:
-        - all_campus_devices
+        - device_config
 
     - name: AMS-ASW-01
       object_template: access-switch
       location: ams-01
       member_of_groups:
-        - all_campus_devices
+        - device_config
 
     - name: AMS-ASW-02
       object_template: access-switch
       location: ams-01
       member_of_groups:
-        - all_campus_devices
+        - device_config
