@@ -1,0 +1,23 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDeviceType
+  data:
+    - name: ISR4451
+      description: Cisco ISR 4451 — enterprise router
+      manufacturer: Cisco
+      height: 2
+      platform: IOS-XE
+
+    - name: C9300-48P
+      description: Cisco Catalyst 9300 48-port PoE — distribution switch
+      manufacturer: Cisco
+      height: 1
+      platform: IOS
+
+    - name: C9300-24P
+      description: Cisco Catalyst 9300 24-port PoE — access switch
+      manufacturer: Cisco
+      height: 1
+      platform: IOS

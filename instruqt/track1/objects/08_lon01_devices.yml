@@ -1,0 +1,54 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    # London Site 01 — large campus: 2 routers, 2 dist switches, 4 access switches
+    - name: LON-RTR-01
+      object_template: border-router
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-RTR-02
+      object_template: border-router
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-DSW-01
+      object_template: distribution-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-DSW-02
+      object_template: distribution-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-ASW-01
+      object_template: access-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-ASW-02
+      object_template: access-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-ASW-03
+      object_template: access-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
+
+    - name: LON-ASW-04
+      object_template: access-switch
+      location: lon-01
+      member_of_groups:
+        - device_config
