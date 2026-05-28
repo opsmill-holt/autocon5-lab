@@ -6,25 +6,29 @@ spec:
   data:
     # Amsterdam Site 01 — medium campus: 1 router, 1 dist switch, 2 access switches
     - name: AMS-RTR-01
-      object_template: border-router
+      status: active
+      role: router
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-DSW-01
-      object_template: distribution-switch
+      status: active
+      role: distribution
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-ASW-01
-      object_template: access-switch
+      status: active
+      role: access
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-ASW-02
-      object_template: access-switch
+      status: active
+      role: access
       location: ams-01
       member_of_groups:
         - device_config
