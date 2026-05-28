@@ -46,6 +46,23 @@ spec:
 apiVersion: infrahub.app/v1
 kind: Object
 spec:
+  kind: CoreIPPrefixPool
+  data:
+    - name: otn-mgmt-prefix-pool
+      description: Management subnet pool for OtterNet sites — allocates /24s from 172.16.0.0/16
+      default_prefix_length: 24
+      ip_namespace: default
+      resources:
+        kind: IpamPrefix
+        data:
+          - prefix: "172.16.0.0/16"
+            status: active
+            role: supernet
+            description: OtterNet management address space
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
   kind: CoreNumberPool
   data:
     - name: otn-asn-pool
