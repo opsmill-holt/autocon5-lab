@@ -14,4 +14,7 @@ spec:
   kind: CoreStandardGroup
   data:
     - name: campus_routers
-      description: Border router devices in campus sites — artifact generation targets
+      description: Border router devices in campus sites — generator group membership
+
+    - name: all_campus_devices
+      description: All devices in campus sites — artifact generation targets

@@ -42,7 +42,7 @@ artifact_definitions:
   - name: router_config
     artifact_name: router-config
     content_type: text/plain
-    targets: campus_routers
+    targets: all_campus_devices
     transformation: router_config
     parameters:
       device_name: name__value
