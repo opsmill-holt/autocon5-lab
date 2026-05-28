@@ -59,6 +59,7 @@ nodes:
             label: Deprecated
           - name: reserved
             label: Reserved
+        default_value: active
       - name: role
         kind: Dropdown
         optional: true
