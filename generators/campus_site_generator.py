@@ -18,16 +18,18 @@ class CampusSiteGenerator(InfrahubGenerator):
         if not design or "device_entries" not in design:
             return
 
-        # Track how many devices of each role we've created (for hostname numbering)
+        campus_routers_group = await self.client.get(kind="CoreStandardGroup", name__value="campus_routers")
+        await campus_routers_group.members.fetch()
+
         role_counters = {}
 
         for entry in design["device_entries"]["edges"]:
             count = entry["node"]["count"]["value"]
             template = entry["node"]["template"]["node"]
-            role = template["role"]["value"]
+            role = template.get("role", {}).get("value") if template else None
             template_id = template["id"]
 
-            role_code = ROLE_CODE.get(role, role.upper())
+            role_code = ROLE_CODE.get(role, role.upper() if role else "UNK")
             role_counters[role_code] = role_counters.get(role_code, 0)
 
             for _ in range(count):
@@ -45,4 +47,10 @@ class CampusSiteGenerator(InfrahubGenerator):
                     },
                 )
                 await device.save(allow_upsert=True)
+
+                if role == "router":
+                    campus_routers_group.members.add(device)
+
                 self.logger.info("Created device: %s", hostname)
+
+        await campus_routers_group.save()
