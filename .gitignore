@@ -1,5 +1,5 @@
 schema-library/
-schemas/location_minimal/
+schemas/test.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
