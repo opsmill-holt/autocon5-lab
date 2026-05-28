@@ -7,14 +7,14 @@ spec:
     - name: London Site 01
       shortname: lon-01
       parent: london
-      mgmt_pool: lon-mgmt-pool
+      mgmt_prefix: "172.16.1.0/24"
 
     - name: Amsterdam Site 01
       shortname: ams-01
       parent: amsterdam
-      mgmt_pool: ams-mgmt-pool
+      mgmt_prefix: "172.16.2.0/24"
 
     - name: Munich Site 01
       shortname: muc-01
       parent: munich
-      mgmt_pool: muc-mgmt-pool
+      mgmt_prefix: "172.16.3.0/24"
