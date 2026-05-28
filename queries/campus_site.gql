@@ -6,9 +6,14 @@ query CampusSite($shortname: String!) {
         shortname {
           value
         }
-        mgmt_pool {
+        mgmt_prefix {
           node {
             id
+            ... on IpamPrefix {
+              prefix {
+                value
+              }
+            }
           }
         }
         design {
