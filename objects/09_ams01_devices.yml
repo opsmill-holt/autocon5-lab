@@ -9,7 +9,6 @@ spec:
       object_template: border-router
       location: ams-01
       member_of_groups:
-        - campus_routers
         - device_config
 
     - name: AMS-DSW-01

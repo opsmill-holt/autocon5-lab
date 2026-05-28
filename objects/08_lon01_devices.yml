@@ -9,14 +9,12 @@ spec:
       object_template: border-router
       location: lon-01
       member_of_groups:
-        - campus_routers
         - device_config
 
     - name: LON-RTR-02
       object_template: border-router
       location: lon-01
       member_of_groups:
-        - campus_routers
         - device_config
 
     - name: LON-DSW-01
