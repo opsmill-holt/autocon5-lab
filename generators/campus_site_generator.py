@@ -18,6 +18,12 @@ class CampusSiteGenerator(InfrahubGenerator):
         if not design or "device_entries" not in design:
             return
 
+        if not site.get("mgmt_pool") or not site["mgmt_pool"].get("node"):
+            raise ValueError(
+                f"Site {site_code!r} has no mgmt_pool set. "
+                "Create a CoreIPAddressPool for this site and link it via LocationSite.mgmt_pool before running the generator."
+            )
+
         # Allocate BGP ASN from pool and write to site (idempotent)
         site_node = await self.client.get(kind="LocationSite", id=site_id)
         asn_pool = await self.client.get(kind="CoreNumberPool", name__value="otn-asn-pool")
