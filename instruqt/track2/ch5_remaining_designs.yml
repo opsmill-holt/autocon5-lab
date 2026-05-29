@@ -1,0 +1,45 @@
+---
+# Track 2 ch5: the designs the student does NOT build by hand. The student
+# creates small-campus (and its device entries) in the UI; this file loads the
+# rest so all four designs exist without duplicating small-campus's entries.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: OtnCampusSite
+  data:
+    - name: medium-campus
+      description: Medium campus design — 1 router, 1 distribution switch, 2 access switches
+    - name: large-campus
+      description: Large campus design — 2 routers, 2 distribution switches, 4 access switches
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: OtnDataCenterSite
+  data:
+    - name: dc-standard
+      description: Standard data center design — 2 spine, 4 leaf, 2 border-leaf
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: OtnDesignDeviceEntry
+  data:
+    - design: medium-campus
+      template: border-router
+      count: 1
+    - design: medium-campus
+      template: distribution-switch
+      count: 1
+    - design: medium-campus
+      template: access-switch
+      count: 2
+    - design: large-campus
+      template: border-router
+      count: 2
+    - design: large-campus
+      template: distribution-switch
+      count: 2
+    - design: large-campus
+      template: access-switch
+      count: 4
