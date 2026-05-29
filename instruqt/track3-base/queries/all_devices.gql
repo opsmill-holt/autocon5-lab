@@ -1,0 +1,20 @@
+query AllDevices {
+  DcimDevice(limit: 1000) {
+    edges {
+      node {
+        id
+        name {
+          value
+        }
+        status {
+          value
+        }
+        primary_address {
+          node {
+            id
+          }
+        }
+      }
+    }
+  }
+}

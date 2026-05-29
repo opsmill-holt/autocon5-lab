@@ -1,0 +1,44 @@
+---
+schemas:
+  - schemas
+
+objects:
+  - objects
+
+queries:
+  - name: all_devices
+    file_path: queries/all_devices.gql
+
+  - name: campus_site
+    file_path: queries/campus_site.gql
+
+  - name: router_config
+    file_path: queries/router_config.gql
+
+check_definitions:
+  - name: check_device_management_ip
+    class_name: CheckDeviceManagementIP
+    file_path: checks/device_checks.py
+
+generator_definitions:
+  - name: campus_site_generator
+    file_path: generators/campus_site_generator.py
+    query: campus_site
+    targets: campus_sites
+    class_name: CampusSiteGenerator
+    parameters:
+      shortname: shortname__value
+
+jinja2_transforms:
+  - name: router_config
+    query: router_config
+    template_path: transforms/router_config.j2
+
+artifact_definitions:
+  - name: router_config
+    artifact_name: router-config
+    content_type: text/plain
+    targets: device_config
+    transformation: router_config
+    parameters:
+      device_name: name__value

@@ -1,0 +1,14 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: OtnCampusSite
+  data:
+    - name: small-campus
+      description: Small campus design — 1 router, 1 access switch
+
+    - name: medium-campus
+      description: Medium campus design — 1 router, 1 distribution switch, 2 access switches
+
+    - name: large-campus
+      description: Large campus design — 2 routers, 2 distribution switches, 4 access switches
