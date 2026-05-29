@@ -7,28 +7,28 @@ spec:
     # Amsterdam Site 01 — medium campus: 1 router, 1 dist switch, 2 access switches
     - name: AMS-RTR-01
       status: active
-      role: router
+      role: edge
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-DSW-01
       status: active
-      role: distribution
+      role: spine
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-ASW-01
       status: active
-      role: access
+      role: leaf
       location: ams-01
       member_of_groups:
         - device_config
 
     - name: AMS-ASW-02
       status: active
-      role: access
+      role: leaf
       location: ams-01
       member_of_groups:
         - device_config

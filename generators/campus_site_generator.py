@@ -1,9 +1,9 @@
 from infrahub_sdk.generator import InfrahubGenerator
 
 ROLE_CODE = {
-    "router": "RTR",
-    "distribution": "DSW",
-    "access": "ASW",
+    "edge": "RTR",
+    "spine": "DSW",
+    "leaf": "ASW",
 }
 
 
