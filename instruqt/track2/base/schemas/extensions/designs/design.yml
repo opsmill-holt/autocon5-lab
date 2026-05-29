@@ -1,0 +1,7 @@
+version: "1.0"
+
+# TODO: Add generics block
+# Define the OtnSiteDesign generic here
+
+# TODO: Add nodes block
+# Define OtnCampusSite, OtnDataCenterSite, and OtnDesignDeviceEntry nodes here

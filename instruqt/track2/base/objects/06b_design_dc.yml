@@ -1,8 +1,0 @@
----
-apiVersion: infrahub.app/v1
-kind: Object
-spec:
-  kind: OtnDataCenterSite
-  data:
-    - name: dc-standard
-      description: Standard data center design — 2 spine, 4 leaf, 2 border-leaf

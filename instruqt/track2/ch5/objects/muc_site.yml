@@ -1,0 +1,25 @@
+---
+# Munich site (muc-01) — the "new site" a student creates by hand in Track 2.
+# Tracks 4 and 5 replay that result by loading this file so the generator has a
+# site to provision. Germany + Munich are upserted; the muc-01 site is created.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: LocationCountry
+  data:
+    - name: Germany
+      shortname: de
+      timezone: Europe/Berlin
+      children:
+        kind: LocationMetro
+        data:
+          - name: Munich
+            shortname: munich
+            children:
+              kind: LocationSite
+              data:
+                - name: Munich Site 01
+                  shortname: muc-01
+                  description: OtterNet Munich site — small campus (AutoCon 5)
+                  member_of_groups:
+                    - campus_sites
