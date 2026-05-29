@@ -8,8 +8,16 @@ objects:
 queries:
   - name: all_devices
     file_path: queries/all_devices.gql
+  - name: device_config
+    file_path: queries/device_config.gql
 
 check_definitions:
   - name: check_device_management_ip
     class_name: CheckDeviceManagementIP
     file_path: checks/device_checks.py
+
+jinja2_transforms:
+  - name: device_config
+    description: Render a router startup config for a device from the SoT
+    query: device_config
+    template_path: transforms/router_config.j2
