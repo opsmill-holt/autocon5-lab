@@ -1,0 +1,33 @@
+query DeviceConfig($device: String!) {
+  DcimDevice(name__value: $device) {
+    edges {
+      node {
+        name {
+          value
+        }
+        fqdn {
+          value
+        }
+        primary_address {
+          node {
+            address {
+              value
+            }
+          }
+        }
+        location {
+          node {
+            ... on LocationSite {
+              bgp_asn {
+                value
+              }
+              mgmt_domain {
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{% set device = data["DcimDevice"]["edges"][0]["node"] %}
+{% set location = device["location"]["node"] %}
+! Managed by OtterNet SoT — {{ location["mgmt_domain"]["value"] if location and location.get("mgmt_domain") and location["mgmt_domain"]["value"] else "unknown" }}
+!
+hostname {{ device["name"]["value"] }}
+!
+ip domain-name {{ device["fqdn"]["value"] if device.get("fqdn") and device["fqdn"]["value"] else device["name"]["value"] }}
+!
+{% if device.get("primary_address") and device["primary_address"].get("node") %}
+{% set mgmt_ip = device["primary_address"]["node"]["address"]["value"].split("/")[0] %}
+interface Management0
+ ip address {{ mgmt_ip }} 255.255.255.0
+ no shutdown
+!
+{% endif %}
+{% if location and location.get("bgp_asn", {}).get("value") %}
+router bgp {{ location["bgp_asn"]["value"] }}
+ bgp log-neighbor-changes
+!
+{% endif %}
+end
