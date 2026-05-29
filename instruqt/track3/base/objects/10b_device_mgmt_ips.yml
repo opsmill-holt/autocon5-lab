@@ -1,28 +1,61 @@
 ---
 # Track 3 base: the London and Amsterdam sites are already LIVE, so their
-# devices carry management IPs out of the 172.16.0.0/16 space. This is what
-# makes CheckDeviceManagementIP meaningful in this track — every active device
-# on `main` is compliant, so the only violation is the LON-RTR-50 device the
-# student adds on the `validation-demo` branch (ch3), and assigning its IP in
-# ch4 makes the check pass cleanly. New sites (e.g. Munich) get their device
-# IPs from the resource pool when the generator runs in Track 4.
+# devices carry management IPs. This is what makes CheckDeviceManagementIP
+# meaningful in this track — every active device on `main` is compliant, so the
+# only violation is the LON-RTR-50 device the student adds on the
+# `validation-demo` branch (ch3); assigning its IP in ch4 makes the check pass
+# and the proposed change merge cleanly. New sites (e.g. Munich) get their
+# device IPs from the resource pool when the generator runs in Track 4.
+#
+# Carve a /24 management prefix per site out of the 172.16.0.0/16 supernet, then
+# allocate one address per device. Prefixes and addresses live in the `default`
+# IP namespace; IPs auto-nest under their containing /24.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: IpamPrefix
+  data:
+    - prefix: "172.16.0.0/24"
+      status: active
+      role: management
+      ip_namespace: default
+      description: London (lon-01) management prefix
+    - prefix: "172.16.1.0/24"
+      status: active
+      role: management
+      ip_namespace: default
+      description: Amsterdam (ams-01) management prefix
+
+---
 apiVersion: infrahub.app/v1
 kind: Object
 spec:
   kind: IpamIPAddress
   data:
-    - address: "172.16.10.1/24"
-    - address: "172.16.10.2/24"
-    - address: "172.16.10.3/24"
-    - address: "172.16.10.4/24"
-    - address: "172.16.10.5/24"
-    - address: "172.16.10.6/24"
-    - address: "172.16.10.7/24"
-    - address: "172.16.10.8/24"
-    - address: "172.16.20.1/24"
-    - address: "172.16.20.2/24"
-    - address: "172.16.20.3/24"
-    - address: "172.16.20.4/24"
+    - address: "172.16.0.1/24"
+      ip_namespace: default
+    - address: "172.16.0.2/24"
+      ip_namespace: default
+    - address: "172.16.0.3/24"
+      ip_namespace: default
+    - address: "172.16.0.4/24"
+      ip_namespace: default
+    - address: "172.16.0.5/24"
+      ip_namespace: default
+    - address: "172.16.0.6/24"
+      ip_namespace: default
+    - address: "172.16.0.7/24"
+      ip_namespace: default
+    - address: "172.16.0.8/24"
+      ip_namespace: default
+    - address: "172.16.1.1/24"
+      ip_namespace: default
+    - address: "172.16.1.2/24"
+      ip_namespace: default
+    - address: "172.16.1.3/24"
+      ip_namespace: default
+    - address: "172.16.1.4/24"
+      ip_namespace: default
 
 ---
 # Assign each live device its primary management address (devices already exist
@@ -33,26 +66,26 @@ spec:
   kind: DcimDevice
   data:
     - name: LON-RTR-01
-      primary_address: "172.16.10.1/24"
+      primary_address: "172.16.0.1/24"
     - name: LON-RTR-02
-      primary_address: "172.16.10.2/24"
+      primary_address: "172.16.0.2/24"
     - name: LON-DSW-01
-      primary_address: "172.16.10.3/24"
+      primary_address: "172.16.0.3/24"
     - name: LON-DSW-02
-      primary_address: "172.16.10.4/24"
+      primary_address: "172.16.0.4/24"
     - name: LON-ASW-01
-      primary_address: "172.16.10.5/24"
+      primary_address: "172.16.0.5/24"
     - name: LON-ASW-02
-      primary_address: "172.16.10.6/24"
+      primary_address: "172.16.0.6/24"
     - name: LON-ASW-03
-      primary_address: "172.16.10.7/24"
+      primary_address: "172.16.0.7/24"
     - name: LON-ASW-04
-      primary_address: "172.16.10.8/24"
+      primary_address: "172.16.0.8/24"
     - name: AMS-RTR-01
-      primary_address: "172.16.20.1/24"
+      primary_address: "172.16.1.1/24"
     - name: AMS-DSW-01
-      primary_address: "172.16.20.2/24"
+      primary_address: "172.16.1.2/24"
     - name: AMS-ASW-01
-      primary_address: "172.16.20.3/24"
+      primary_address: "172.16.1.3/24"
     - name: AMS-ASW-02
-      primary_address: "172.16.20.4/24"
+      primary_address: "172.16.1.4/24"
