@@ -1,0 +1,48 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: LocationCountry
+  data:
+    - name: United Kingdom
+      shortname: uk
+      timezone: Europe/London
+      children:
+        kind: LocationMetro
+        data:
+          - name: London
+            shortname: london
+            children:
+              kind: LocationSite
+              data:
+                - name: London Site 01
+                  shortname: lon-01
+                  description: OtterNet London primary site — large campus
+                  member_of_groups:
+                    - campus_sites
+
+    - name: Netherlands
+      shortname: nl
+      timezone: Europe/Amsterdam
+      children:
+        kind: LocationMetro
+        data:
+          - name: Amsterdam
+            shortname: amsterdam
+            children:
+              kind: LocationSite
+              data:
+                - name: Amsterdam Site 01
+                  shortname: ams-01
+                  description: OtterNet Amsterdam site — medium campus
+                  member_of_groups:
+                    - campus_sites
+
+    - name: Germany
+      shortname: de
+      timezone: Europe/Berlin
+      children:
+        kind: LocationMetro
+        data:
+          - name: Munich
+            shortname: munich
