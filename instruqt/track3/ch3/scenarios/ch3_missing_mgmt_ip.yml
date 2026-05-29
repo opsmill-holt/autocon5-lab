@@ -1,0 +1,16 @@
+---
+# Track 3 ch3: an active device with a valid name and a real site, but no
+# primary management address. The schema accepts it (primary_address is
+# optional); the CheckDeviceManagementIP Python check flags it on the
+# Proposed Change.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    - name: LON-RTR-50
+      status: active
+      role: edge
+      location: lon-01
+      member_of_groups:
+        - device_config
