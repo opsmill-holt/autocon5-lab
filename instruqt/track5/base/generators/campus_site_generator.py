@@ -1,5 +1,3 @@
-import ipaddress
-
 from infrahub_sdk.generator import InfrahubGenerator
 
 ROLE_CODE = {
@@ -14,9 +12,10 @@ class CampusSiteGenerator(InfrahubGenerator):
 
     For each site in the target group, read its assigned design and, for every
     device entry, create the right number of devices from the entry's template,
-    allocate a BGP ASN to the site from the shared pool, and assign each device a
-    management IP carved from the site's management prefix. Idempotent: re-running
-    upserts rather than duplicating.
+    allocate a BGP ASN to the site from the shared pool, and allocate each device
+    a management IP from the site's IP pool. Idempotent: ASN/IP allocation is
+    keyed (pool + identifier=hostname) and every save uses allow_upsert, so
+    re-running upserts rather than duplicating.
     """
 
     async def generate(self, data: dict) -> None:
@@ -37,9 +36,6 @@ class CampusSiteGenerator(InfrahubGenerator):
                 f"Site {site_code!r} has no mgmt_prefix set. Assign a management "
                 "prefix to the site before running the generator."
             )
-        prefix_value = site["mgmt_prefix"]["node"]["prefix"]["value"]
-        network = ipaddress.ip_network(prefix_value, strict=False)
-        host_addresses = network.hosts()
 
         # Allocate a BGP ASN from the pool and write it to the site (idempotent).
         site_node = await self.client.get(kind="LocationSite", id=site_id)
@@ -47,6 +43,32 @@ class CampusSiteGenerator(InfrahubGenerator):
         site_node.bgp_asn = asn_pool
         await site_node.save(allow_upsert=True)
         self.logger.info("Allocated BGP ASN for site %s", site_code)
+
+        # Find or create a per-site management IP pool over the site's prefix.
+        # allocate_next_ip_address draws /32s from it, keyed by identifier below.
+        mgmt_prefix_value = site["mgmt_prefix"]["node"]["prefix"]["value"]
+        mgmt_pools = await self.client.filters(
+            kind="CoreIPAddressPool",
+            resources__prefix__value=mgmt_prefix_value,
+        )
+        if mgmt_pools:
+            mgmt_pool = mgmt_pools[0]
+        else:
+            site_shortname = site["shortname"]["value"]
+            mgmt_prefix_id = site["mgmt_prefix"]["node"]["id"]
+            mgmt_pool = await self.client.create(
+                kind="CoreIPAddressPool",
+                data={
+                    "name": f"{site_shortname}-mgmt-pool",
+                    "description": f"Management IP pool for {site_shortname.upper()} site",
+                    "default_address_type": "IpamIPAddress",
+                    "default_prefix_length": 32,
+                    "ip_namespace": "default",
+                    "resources": [{"id": mgmt_prefix_id}],
+                },
+            )
+            await mgmt_pool.save(allow_upsert=True)
+            self.logger.info("Created management IP pool for site %s", site_code)
 
         device_config_group = await self.client.get(
             kind="CoreStandardGroup", name__value="device_config"
@@ -78,18 +100,13 @@ class CampusSiteGenerator(InfrahubGenerator):
                         "member_of_groups": [device_config_group],
                     },
                 )
-                await device.save(allow_upsert=True)
-
-                # Assign a management IP carved from the site's prefix (idempotent).
-                mgmt_ip_value = f"{next(host_addresses)}/{network.prefixlen}"
-                mgmt_ip = await self.client.create(
-                    kind="IpamIPAddress",
-                    data={
-                        "address": mgmt_ip_value,
-                        "description": f"Management IP for {hostname}",
-                    },
+                # Idempotent: the same identifier (hostname) always resolves to the
+                # same allocated IP, regardless of run order.
+                mgmt_ip = await self.client.allocate_next_ip_address(
+                    resource_pool=mgmt_pool,
+                    identifier=hostname,
+                    data={"description": f"Management IP for {hostname}"},
                 )
-                await mgmt_ip.save(allow_upsert=True)
                 device.primary_address = mgmt_ip
                 await device.save(allow_upsert=True)
-                self.logger.info("Provisioned %s (%s)", hostname, mgmt_ip_value)
+                self.logger.info("Provisioned %s", hostname)
