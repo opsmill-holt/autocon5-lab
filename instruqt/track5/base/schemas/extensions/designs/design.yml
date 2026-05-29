@@ -1,0 +1,146 @@
+---
+# yaml-language-server: $schema=https://schema.infrahub.app/infrahub/schema/latest.json
+version: "1.0"
+
+generics:
+  - name: SiteDesign
+    namespace: Otn
+    description: Abstract site design blueprint shared by campus and DC tiers.
+    label: Site Design
+    icon: mdi:file-tree
+    include_in_menu: true
+    human_friendly_id:
+      - name__value
+    display_label: name__value
+    order_by:
+      - name__value
+    attributes:
+      - name: name
+        kind: Text
+        unique: true
+        order_weight: 1000
+      - name: description
+        kind: Text
+        optional: true
+        order_weight: 1100
+      - name: bgp_asn
+        kind: Number
+        optional: true
+        order_weight: 1300
+        state: absent
+    relationships:
+      - name: device_entries
+        peer: OtnDesignDeviceEntry
+        kind: Component
+        cardinality: many
+        optional: true
+        identifier: design__device_entries
+        order_weight: 2000
+      - name: sites
+        label: Sites
+        peer: LocationSite
+        cardinality: many
+        kind: Generic
+        optional: true
+        identifier: location_site__design
+        order_weight: 2100
+
+nodes:
+  - name: DesignDeviceEntry
+    namespace: Otn
+    label: Design Device Entry
+    description: Links a site design to a device template with a desired instance count.
+    icon: mdi:counter
+    include_in_menu: false
+    human_friendly_id:
+      - design__name__value
+      - template__template_name__value
+    order_by:
+      - template__template_name__value
+    attributes:
+      - name: count
+        kind: Number
+        default_value: 1
+        order_weight: 1000
+        parameters:
+          min_value: 1
+          max_value: 8
+    relationships:
+      - name: design
+        peer: OtnSiteDesign
+        kind: Attribute
+        cardinality: one
+        optional: false
+        identifier: design__device_entries
+        order_weight: 2000
+      - name: template
+        peer: CoreObjectTemplate
+        kind: Attribute
+        cardinality: one
+        optional: false
+        identifier: device_template__entries
+        order_weight: 2100
+
+  - name: CampusSite
+    namespace: Otn
+    label: Campus Site Design
+    icon: ri:building-line
+    inherit_from:
+      - OtnSiteDesign
+      - CoreArtifactTarget
+    menu_placement: OtnSiteDesign
+    uniqueness_constraints:
+      - [name__value]
+    human_friendly_id:
+      - name__value
+    display_label: name__value
+
+  - name: DataCenterSite
+    namespace: Otn
+    label: Data Center Site Design
+    icon: mdi:server-network
+    inherit_from:
+      - OtnSiteDesign
+      - CoreArtifactTarget
+    menu_placement: OtnSiteDesign
+    uniqueness_constraints:
+      - [name__value]
+    human_friendly_id:
+      - name__value
+    display_label: name__value
+
+extensions:
+  nodes:
+    - kind: LocationSite
+      attributes:
+        - name: bgp_asn
+          kind: Number
+          optional: true
+          order_weight: 2050
+        - name: mgmt_domain
+          label: Management Domain
+          kind: Text
+          read_only: true
+          optional: true
+          order_weight: 2055
+          computed_attribute:
+            kind: Jinja2
+            jinja2_template: "{{ shortname__value }}.mgmt.otternet.net"
+      relationships:
+        - name: design
+          label: Site Design
+          peer: OtnSiteDesign
+          cardinality: one
+          kind: Attribute
+          optional: true
+          identifier: location_site__design
+          order_weight: 2000
+
+        - name: mgmt_prefix
+          label: Management IP Prefix
+          peer: IpamPrefix
+          cardinality: one
+          kind: Attribute
+          optional: true
+          identifier: location_site__mgmt_prefix
+          order_weight: 2100

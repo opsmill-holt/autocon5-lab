@@ -1,0 +1,15 @@
+---
+schemas:
+  - schemas
+
+objects:
+  - objects
+
+queries:
+  - name: all_devices
+    file_path: queries/all_devices.gql
+
+check_definitions:
+  - name: check_device_management_ip
+    class_name: CheckDeviceManagementIP
+    file_path: checks/device_checks.py

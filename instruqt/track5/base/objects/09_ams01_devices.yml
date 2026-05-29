@@ -1,0 +1,34 @@
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    # Amsterdam Site 01 — medium campus: 1 router, 1 dist switch, 2 access switches
+    - name: AMS-RTR-01
+      status: active
+      role: edge
+      location: ams-01
+      member_of_groups:
+        - device_config
+
+    - name: AMS-DSW-01
+      status: active
+      role: spine
+      location: ams-01
+      member_of_groups:
+        - device_config
+
+    - name: AMS-ASW-01
+      status: active
+      role: leaf
+      location: ams-01
+      member_of_groups:
+        - device_config
+
+    - name: AMS-ASW-02
+      status: active
+      role: leaf
+      location: ams-01
+      member_of_groups:
+        - device_config
