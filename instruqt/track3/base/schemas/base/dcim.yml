@@ -27,6 +27,14 @@ generics:
         kind: Text
         optional: true
         order_weight: 2200
+      - name: fqdn
+        kind: Text
+        computed_attribute:
+          kind: Jinja2
+          jinja2_template: "{{ name__value }}.{{ location__shortname__value }}.otternet.net"
+        read_only: true
+        optional: true
+        order_weight: 1050
     relationships:
       - name: interfaces
         peer: DcimInterface
@@ -422,7 +430,7 @@ nodes:
     label: Network Device
     description: A configurable network device for managing and directing data traffic, including routers, switches...
     icon: clarity:network-switch-solid
-    # generate_template: true
+    generate_template: true
     namespace: Dcim
     inherit_from:
       - CoreArtifactTarget
