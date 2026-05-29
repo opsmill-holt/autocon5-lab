@@ -1,0 +1,15 @@
+---
+# Track 4 starting state: the Munich site exists and is assigned the small-campus
+# design (the student created it in Track 2), but it has NO devices yet and no
+# management prefix / generator-group membership. The student wires those up and
+# the generator provisions the devices across Track 4.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: LocationSite
+  data:
+    - name: Munich Site 01
+      shortname: muc-01
+      parent: munich
+      description: OtterNet Munich site — small campus (AutoCon 5)
+      design: small-campus
