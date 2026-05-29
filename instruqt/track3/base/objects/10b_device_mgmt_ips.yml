@@ -1,0 +1,58 @@
+---
+# Track 3 base: the London and Amsterdam sites are already LIVE, so their
+# devices carry management IPs out of the 172.16.0.0/16 space. This is what
+# makes CheckDeviceManagementIP meaningful in this track — every active device
+# on `main` is compliant, so the only violation is the LON-RTR-50 device the
+# student adds on the `validation-demo` branch (ch3), and assigning its IP in
+# ch4 makes the check pass cleanly. New sites (e.g. Munich) get their device
+# IPs from the resource pool when the generator runs in Track 4.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: IpamIPAddress
+  data:
+    - address: "172.16.10.1/24"
+    - address: "172.16.10.2/24"
+    - address: "172.16.10.3/24"
+    - address: "172.16.10.4/24"
+    - address: "172.16.10.5/24"
+    - address: "172.16.10.6/24"
+    - address: "172.16.10.7/24"
+    - address: "172.16.10.8/24"
+    - address: "172.16.20.1/24"
+    - address: "172.16.20.2/24"
+    - address: "172.16.20.3/24"
+    - address: "172.16.20.4/24"
+
+---
+# Assign each live device its primary management address (devices already exist
+# from 08/09; this upserts by name and only sets primary_address).
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    - name: LON-RTR-01
+      primary_address: "172.16.10.1/24"
+    - name: LON-RTR-02
+      primary_address: "172.16.10.2/24"
+    - name: LON-DSW-01
+      primary_address: "172.16.10.3/24"
+    - name: LON-DSW-02
+      primary_address: "172.16.10.4/24"
+    - name: LON-ASW-01
+      primary_address: "172.16.10.5/24"
+    - name: LON-ASW-02
+      primary_address: "172.16.10.6/24"
+    - name: LON-ASW-03
+      primary_address: "172.16.10.7/24"
+    - name: LON-ASW-04
+      primary_address: "172.16.10.8/24"
+    - name: AMS-RTR-01
+      primary_address: "172.16.20.1/24"
+    - name: AMS-DSW-01
+      primary_address: "172.16.20.2/24"
+    - name: AMS-ASW-01
+      primary_address: "172.16.20.3/24"
+    - name: AMS-ASW-02
+      primary_address: "172.16.20.4/24"
