@@ -4,13 +4,16 @@ kind: Object
 spec:
   kind: DcimDevice
   data:
-    # London Site 01 — large campus: 2 routers, 2 dist switches, 4 access switches
+    # London Site 01 — large campus: 2 routers, 2 dist switches, 4 access switches.
+    # London is a LIVE site, so each device gets a management IP from the
+    # 172.16.0.0/24 prefix (created in 07c_mgmt_ipam.yml, default namespace).
     - name: LON-RTR-01
       status: active
       role: edge
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.1/24", "default"]
 
     - name: LON-RTR-02
       status: active
@@ -18,6 +21,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.2/24", "default"]
 
     - name: LON-DSW-01
       status: active
@@ -25,6 +29,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.3/24", "default"]
 
     - name: LON-DSW-02
       status: active
@@ -32,6 +37,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.4/24", "default"]
 
     - name: LON-ASW-01
       status: active
@@ -39,6 +45,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.5/24", "default"]
 
     - name: LON-ASW-02
       status: active
@@ -46,6 +53,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.6/24", "default"]
 
     - name: LON-ASW-03
       status: active
@@ -53,6 +61,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.7/24", "default"]
 
     - name: LON-ASW-04
       status: active
@@ -60,3 +69,4 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
+      primary_address: ["172.16.0.8/24", "default"]
