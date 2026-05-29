@@ -6,12 +6,12 @@ query AllDevices {
         name {
           value
         }
-        location {
+        status {
+          value
+        }
+        primary_address {
           node {
-            __typename
-            shortname {
-              value
-            }
+            id
           }
         }
       }

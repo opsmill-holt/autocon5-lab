@@ -16,12 +16,8 @@ queries:
     file_path: queries/router_config.gql
 
 check_definitions:
-  - name: check_device_hostname
-    class_name: CheckDeviceHostname
-    file_path: checks/device_checks.py
-
-  - name: check_device_site
-    class_name: CheckDeviceSite
+  - name: check_device_management_ip
+    class_name: CheckDeviceManagementIP
     file_path: checks/device_checks.py
 
 generator_definitions:
