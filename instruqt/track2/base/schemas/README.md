@@ -1,0 +1,3 @@
+# Base
+
+Please refer to the [reference page](https://docs.infrahub.app/schema-library/reference/dcim) for the corresponding documentation.
