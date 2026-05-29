@@ -73,81 +73,81 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.1/24"
+      primary_address: ["172.16.0.1/24", "default"]
     - name: LON-RTR-02
       status: active
       role: edge
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.2/24"
+      primary_address: ["172.16.0.2/24", "default"]
     - name: LON-DSW-01
       status: active
       role: spine
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.3/24"
+      primary_address: ["172.16.0.3/24", "default"]
     - name: LON-DSW-02
       status: active
       role: spine
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.4/24"
+      primary_address: ["172.16.0.4/24", "default"]
     - name: LON-ASW-01
       status: active
       role: leaf
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.5/24"
+      primary_address: ["172.16.0.5/24", "default"]
     - name: LON-ASW-02
       status: active
       role: leaf
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.6/24"
+      primary_address: ["172.16.0.6/24", "default"]
     - name: LON-ASW-03
       status: active
       role: leaf
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.7/24"
+      primary_address: ["172.16.0.7/24", "default"]
     - name: LON-ASW-04
       status: active
       role: leaf
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.0.8/24"
+      primary_address: ["172.16.0.8/24", "default"]
     - name: AMS-RTR-01
       status: active
       role: edge
       location: ams-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.1.1/24"
+      primary_address: ["172.16.1.1/24", "default"]
     - name: AMS-DSW-01
       status: active
       role: spine
       location: ams-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.1.2/24"
+      primary_address: ["172.16.1.2/24", "default"]
     - name: AMS-ASW-01
       status: active
       role: leaf
       location: ams-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.1.3/24"
+      primary_address: ["172.16.1.3/24", "default"]
     - name: AMS-ASW-02
       status: active
       role: leaf
       location: ams-01
       member_of_groups:
         - device_config
-      primary_address: "172.16.1.4/24"
+      primary_address: ["172.16.1.4/24", "default"]
