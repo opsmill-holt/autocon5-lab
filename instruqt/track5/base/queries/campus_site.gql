@@ -1,0 +1,47 @@
+query CampusSite($shortname: String!) {
+  LocationSite(shortname__value: $shortname) {
+    edges {
+      node {
+        id
+        shortname {
+          value
+        }
+        mgmt_prefix {
+          node {
+            id
+            ... on IpamPrefix {
+              prefix {
+                value
+              }
+            }
+          }
+        }
+        design {
+          node {
+            ... on OtnCampusSite {
+              device_entries {
+                edges {
+                  node {
+                    count {
+                      value
+                    }
+                    template {
+                      node {
+                        id
+                        ... on TemplateDcimDevice {
+                          role {
+                            value
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

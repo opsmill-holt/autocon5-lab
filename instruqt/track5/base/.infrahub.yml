@@ -8,16 +8,20 @@ objects:
 queries:
   - name: all_devices
     file_path: queries/all_devices.gql
-  - name: device_config
-    file_path: queries/device_config.gql
+
+  - name: campus_site
+    file_path: queries/campus_site.gql
 
 check_definitions:
   - name: check_device_management_ip
     class_name: CheckDeviceManagementIP
     file_path: checks/device_checks.py
 
-jinja2_transforms:
-  - name: device_config
-    description: Render a router startup config for a device from the SoT
-    query: device_config
-    template_path: transforms/router_config.j2
+generator_definitions:
+  - name: campus_site_generator
+    file_path: generators/campus_site_generator.py
+    query: campus_site
+    targets: campus_sites
+    class_name: CampusSiteGenerator
+    parameters:
+      shortname: shortname__value
