@@ -36,6 +36,11 @@ class CampusSiteGenerator(InfrahubGenerator):
                 f"Site {site_code!r} has no mgmt_prefix set. Assign a management "
                 "prefix to the site before running the generator."
             )
+        self.logger.info(
+            "Generating %s — %d device entries",
+            site_code,
+            len(design["device_entries"]["edges"]),
+        )
 
         # Allocate a BGP ASN from the pool and write it to the site (idempotent).
         site_node = await self.client.get(kind="LocationSite", id=site_id)
