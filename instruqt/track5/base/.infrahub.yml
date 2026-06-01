@@ -8,6 +8,8 @@ objects:
 queries:
   - name: all_devices
     file_path: queries/all_devices.gql
+  - name: sites_with_devices
+    file_path: queries/sites_with_devices.gql
 
   - name: campus_site
     file_path: queries/campus_site.gql
@@ -15,6 +17,9 @@ queries:
 check_definitions:
   - name: check_device_management_ip
     class_name: CheckDeviceManagementIP
+    file_path: checks/device_checks.py
+  - name: check_site_has_border_router
+    class_name: CheckSiteHasBorderRouter
     file_path: checks/device_checks.py
 
 generator_definitions:
