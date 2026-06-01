@@ -21,5 +21,3 @@ spec:
                 - name: Munich Site 01
                   shortname: muc-01
                   description: OtterNet Munich site — small campus (AutoCon 5)
-                  member_of_groups:
-                    - campus_sites
