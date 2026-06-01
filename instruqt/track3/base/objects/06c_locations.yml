@@ -18,8 +18,6 @@ spec:
                 - name: London Site 01
                   shortname: lon-01
                   description: OtterNet London primary site — large campus
-                  member_of_groups:
-                    - campus_sites
 
     - name: Netherlands
       shortname: nl
@@ -35,8 +33,6 @@ spec:
                 - name: Amsterdam Site 01
                   shortname: ams-01
                   description: OtterNet Amsterdam site — medium campus
-                  member_of_groups:
-                    - campus_sites
 
     - name: Germany
       shortname: de
