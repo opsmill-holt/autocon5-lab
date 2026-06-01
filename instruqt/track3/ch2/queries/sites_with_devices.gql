@@ -1,0 +1,26 @@
+query SitesWithDevices {
+  LocationSite(limit: 1000) {
+    edges {
+      node {
+        id
+        shortname {
+          value
+        }
+        devices {
+          edges {
+            node {
+              ... on DcimDevice {
+                role {
+                  value
+                }
+                status {
+                  value
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
