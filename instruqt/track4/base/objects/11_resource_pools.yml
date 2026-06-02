@@ -7,6 +7,8 @@ spec:
     - name: otn-mgmt-prefix-pool
       description: Management subnet pool for OtterNet sites — allocates /24s from 172.16.0.0/16
       default_prefix_length: 24
+      default_member_type: prefix
+      default_prefix_type: IpamPrefix
       ip_namespace: default
       resources:
         kind: IpamPrefix
