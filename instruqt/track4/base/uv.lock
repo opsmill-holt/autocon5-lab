@@ -105,41 +105,6 @@ wheels = [
 ]
 
 [[package]]
-name = "OtterNet"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "infrahub-sdk", extra = ["all"] },
-    { name = "invoke" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "infrahub-testcontainers" },
-    { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
-    { name = "ruff" },
-    { name = "yamllint" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "infrahub-sdk", extras = ["all"], specifier = "==1.20.1" },
-    { name = "invoke", specifier = ">=3.0.3" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "infrahub-testcontainers", specifier = ">=1.9.6" },
-    { name = "mypy", specifier = ">=2.1.0" },
-    { name = "pytest", specifier = ">=9.0.3" },
-    { name = "pytest-asyncio", specifier = ">=1.4.0" },
-    { name = "ruff", specifier = ">=0.15.14" },
-    { name = "yamllint", specifier = ">=1.38.0" },
-]
-
-[[package]]
 name = "autoflake"
 version = "2.3.3"
 source = { registry = "https://pypi.org/simple" }
@@ -293,14 +258,14 @@ wheels = [
 
 [[package]]
 name = "click"
-version = "8.1.8"
+version = "8.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b9/2e/0090cbf739cee7d23781ad4b89a9894a41538e4fcf4c31dcdd705b78eb8b/click-8.1.8.tar.gz", hash = "sha256:ed53c9d8990d83c2a27deae68e4ee337473f6330c040a31d4225c9574d16096a", size = 226593, upload-time = "2024-12-21T18:38:44.339Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9b/98/518d8e5081007684232226f475082b30087d0f585e8457db087298259f49/click-8.4.1.tar.gz", hash = "sha256:918b5633eddf6b41c32d4f454bf0de810065c74e3f7dbf8ee5452f8be88d3e96", size = 353007, upload-time = "2026-05-22T04:08:37.769Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/7e/d4/7ebdbd03970677812aac39c869717059dbb71a4cfc033ca6e5221787892c/click-8.1.8-py3-none-any.whl", hash = "sha256:63c132bbbed01578a06712a2d1f497bb62d9c1c0d329b7903a866228027263b2", size = 98188, upload-time = "2024-12-21T18:38:41.666Z" },
+    { url = "https://files.pythonhosted.org/packages/c7/0d/67e5b4109ea4a837e80daa87c2c696711955e40449a97e8926672534def2/click-8.4.1-py3-none-any.whl", hash = "sha256:482be17c6991b8c19c5429a1e995d9b0efdbb63172824c41f99965dc0ade8ec2", size = 116639, upload-time = "2026-05-22T04:08:35.26Z" },
 ]
 
 [[package]]
@@ -558,7 +523,7 @@ wheels = [
 
 [[package]]
 name = "infrahub-sdk"
-version = "1.20.1"
+version = "1.21.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dulwich" },
@@ -571,9 +536,9 @@ dependencies = [
     { name = "ujson" },
     { name = "whenever" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d9/c9/6be3dce3184422f1baa222035998bc9552ed30cdf9a73694c7387db2d6f3/infrahub_sdk-1.20.1.tar.gz", hash = "sha256:5b7134814d8a700bcae9069aeabc4cf0b18d4f7234dd5867c665b26620393d83", size = 1025138, upload-time = "2026-05-20T13:45:30.069Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/19/49/02a4b732835ecf5f2f7a528632f165363a52c066ebd77c4e2479b46c2c2e/infrahub_sdk-1.21.0.tar.gz", hash = "sha256:00f6be75a9dc626cc765036a1c12f4a5062017e209ad5045eb48058ae68125be", size = 1051750, upload-time = "2026-05-29T15:40:14.301Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1b/4f/0533d93f6805b82bb44e19e76855f6a8e5b4c8810c95d770dfc5abaf10a0/infrahub_sdk-1.20.1-py3-none-any.whl", hash = "sha256:82439aff95408d31dcd00661833804907d952dd7ae7b2cae3be8ed35c7bd85aa", size = 246235, upload-time = "2026-05-20T13:45:28.412Z" },
+    { url = "https://files.pythonhosted.org/packages/00/57/02cdc4f9f8a1e072a233bca7f51b2666bbb6eaca335549ffc72f8327255e/infrahub_sdk-1.21.0-py3-none-any.whl", hash = "sha256:35da9dbe9f7705b6cc30c177d59f736f0b85d147b62faf75437d590b5419c6ee", size = 250080, upload-time = "2026-05-29T15:40:12.785Z" },
 ]
 
 [package.optional-dependencies]
@@ -1104,6 +1069,41 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5f/cc/2d10025f9056d376e4127ec05a5808b218d46f035fdc08178a5411b34250/orjson-3.11.9-cp313-cp313-win32.whl", hash = "sha256:d4087e5c0209a0a8efe4de3303c234b9c44d1174161dcd851e8eea07c7560b32", size = 131613, upload-time = "2026-05-06T15:10:39.569Z" },
     { url = "https://files.pythonhosted.org/packages/67/bd/2775ff28bfe883b9aa1ff348300542eb2ef1ee18d8ae0e3a49846817a865/orjson-3.11.9-cp313-cp313-win_amd64.whl", hash = "sha256:051b102c93b4f634e89f3866b07b9a9a98915ada541f4ec30f177067b2694979", size = 127086, upload-time = "2026-05-06T15:10:41.262Z" },
     { url = "https://files.pythonhosted.org/packages/91/2b/d26799e580939e32a7da9a39531bc9e58e15ca32ffaa6a8cb3e9bb0d22cd/orjson-3.11.9-cp313-cp313-win_arm64.whl", hash = "sha256:cce9127885941bd28f080cecf1f1d288336b7e0d812c345b08be88b572796254", size = 126696, upload-time = "2026-05-06T15:10:42.651Z" },
+]
+
+[[package]]
+name = "otternet"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "infrahub-sdk", extra = ["all"] },
+    { name = "invoke" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "infrahub-testcontainers" },
+    { name = "mypy" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+    { name = "ruff" },
+    { name = "yamllint" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "infrahub-sdk", extras = ["all"], specifier = "==1.21.0" },
+    { name = "invoke", specifier = ">=3.0.3" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "infrahub-testcontainers", specifier = ">=1.9.6" },
+    { name = "mypy", specifier = ">=2.1.0" },
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "pytest-asyncio", specifier = ">=1.4.0" },
+    { name = "ruff", specifier = ">=0.15.14" },
+    { name = "yamllint", specifier = ">=1.38.0" },
 ]
 
 [[package]]
