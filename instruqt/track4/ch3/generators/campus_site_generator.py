@@ -47,7 +47,7 @@ class CampusSiteGenerator(InfrahubGenerator):
         mgmt_pool = await self.client.create(
             kind="CoreIPAddressPool",
             data={
-                "name": f"{site_code.lower()}-mgmt-pool",
+                "name": f"{site['shortname']['value']}-mgmt-pool",
                 "default_address_type": "IpamIPAddress",
                 "default_prefix_length": 32,
                 "ip_namespace": "default",
