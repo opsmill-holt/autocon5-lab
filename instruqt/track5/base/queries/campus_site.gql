@@ -9,11 +9,6 @@ query CampusSite($shortname: String!) {
         mgmt_prefix {
           node {
             id
-            ... on IpamPrefix {
-              prefix {
-                value
-              }
-            }
           }
         }
         design {
@@ -25,14 +20,12 @@ query CampusSite($shortname: String!) {
                     count {
                       value
                     }
+                    device_hostname_prefix {
+                      value
+                    }
                     template {
                       node {
                         id
-                        ... on TemplateDcimDevice {
-                          role {
-                            value
-                          }
-                        }
                       }
                     }
                   }

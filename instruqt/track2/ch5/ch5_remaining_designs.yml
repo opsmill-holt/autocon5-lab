@@ -27,19 +27,25 @@ spec:
   data:
     - design: medium-campus
       template: border-router
+      device_hostname_prefix: RTR
       count: 1
     - design: medium-campus
       template: distribution-switch
+      device_hostname_prefix: DSW
       count: 1
     - design: medium-campus
       template: access-switch
+      device_hostname_prefix: ASW
       count: 2
     - design: large-campus
       template: border-router
+      device_hostname_prefix: RTR
       count: 2
     - design: large-campus
       template: distribution-switch
+      device_hostname_prefix: DSW
       count: 2
     - design: large-campus
       template: access-switch
+      device_hostname_prefix: ASW
       count: 4
