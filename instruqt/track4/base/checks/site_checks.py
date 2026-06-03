@@ -1,0 +1,34 @@
+from infrahub_sdk.checks import InfrahubCheck
+
+
+class CheckSiteHasBorderRouter(InfrahubCheck):
+    """Every provisioned site must have at least one active edge (border) router.
+
+    A schema can't express "this relationship must contain a member whose role
+    is edge" — it's an aggregate rule across a site's devices, so it's a Python
+    check. Sites with no devices yet (e.g. a freshly created site awaiting the
+    generator) are skipped so unprovisioned sites aren't falsely flagged.
+    """
+
+    query = "sites_with_devices"
+
+    def validate(self, data: dict) -> None:
+        for edge in data["LocationSite"]["edges"]:
+            site = edge["node"]
+            shortname = site["shortname"]["value"]
+            devices = site["devices"]["edges"]
+            if not devices:
+                continue  # site not provisioned yet — nothing to enforce
+
+            has_border = any(
+                dev["node"].get("role", {}).get("value") == "edge"
+                and dev["node"].get("status", {}).get("value") == "active"
+                for dev in devices
+            )
+            if not has_border:
+                self.log_error(
+                    f"Site '{shortname}' has devices but no active edge "
+                    f"(border) router. Every provisioned site must have one "
+                    f"before merging.",
+                    object_id=site["id"],
+                )
