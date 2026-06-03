@@ -20,7 +20,7 @@ check_definitions:
     file_path: checks/device_checks.py
   - name: check_site_has_border_router
     class_name: CheckSiteHasBorderRouter
-    file_path: checks/device_checks.py
+    file_path: checks/site_checks.py
 
 generator_definitions:
   - name: campus_site_generator
