@@ -1,0 +1,32 @@
+---
+# Event-driven provisioning for OtterNet campus sites.
+#
+# Together these two objects make the campus_site_generator run automatically the
+# moment a site is added to the campus_sites group — outside any Proposed Change.
+# The student builds these by hand in the Infrahub UI (Track 5, "Automate the
+# Generator with an Event Rule"); this object file is the version-controlled
+# equivalent, used by the challenge solve and to seed the next challenge.
+
+# 1. The action: "run the campus_site_generator when fired."
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: CoreGeneratorAction
+  data:
+    - name: run-campus-site-generator
+      generator: campus_site_generator
+---
+# 2. The trigger rule: "fire that action when a member is ADDED to campus_sites,
+#    on a branch (other_branches) so the result is reviewable in a Proposed Change."
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: CoreGroupTriggerRule
+  data:
+    - name: provision-campus-site-on-add
+      description: Run the campus site generator when a site joins campus_sites
+      active: true
+      branch_scope: other_branches
+      member_update: added
+      group: campus_sites
+      action: run-campus-site-generator

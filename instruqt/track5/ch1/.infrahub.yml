@@ -34,6 +34,11 @@ generator_definitions:
     class_name: CampusSiteGenerator
     parameters:
       shortname: shortname__value
+    # Event-driven in Track 5: a Group Trigger Rule runs this generator the moment a
+    # site is added to campus_sites (on a branch), so it no longer runs inside the
+    # Proposed Change pipeline — the PC is left to run checks and artifacts only.
+    execute_in_proposed_change: false
+    execute_after_merge: false
 
 jinja2_transforms:
   - name: device_config
