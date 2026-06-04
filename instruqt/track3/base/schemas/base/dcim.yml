@@ -19,10 +19,12 @@ generics:
         kind: Text
         unique: true
         order_weight: 1000
+# TODO (Track 3 / Challenge 1 / Step 04): replace this line with the hostname regex
       - name: description
         kind: Text
         optional: true
         order_weight: 2000
+# TODO (Track 3 / Challenge 1 / Step 05): replace this line with the serial_number attribute
       - name: os_version
         kind: Text
         optional: true
