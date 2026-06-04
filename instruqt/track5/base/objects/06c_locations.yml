@@ -18,6 +18,7 @@ spec:
                 - name: London Site 01
                   shortname: lon-01
                   description: OtterNet London primary site — large campus
+                  bgp_asn: 65500
 
     - name: Netherlands
       shortname: nl
@@ -33,6 +34,7 @@ spec:
                 - name: Amsterdam Site 01
                   shortname: ams-01
                   description: OtterNet Amsterdam site — medium campus
+                  bgp_asn: 65510
 
     - name: Germany
       shortname: de
