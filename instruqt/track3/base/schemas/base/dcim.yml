@@ -29,6 +29,7 @@ generics:
         kind: Text
         optional: true
         order_weight: 2200
+# TODO (Track 3 / Challenge 6 / Step 01): replace this line with the ntp_server attribute
       - name: fqdn
         kind: Text
         computed_attribute:
