@@ -23,7 +23,7 @@ kind: Object
 spec:
   kind: CoreGroupTriggerRule
   data:
-    - name: provision-campus-site-on-add
+    - name: site-group-trigger-rule
       description: Run the campus site generator when a site joins campus_sites
       active: true
       branch_scope: other_branches
