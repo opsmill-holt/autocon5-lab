@@ -46,10 +46,10 @@ jinja2_transforms:
     template_path: transforms/router_config.j2
 
 artifact_definitions:
-  - name: "Device startup config"
-    artifact_name: "startup-config"
+  - name: Device startup config
+    artifact_name: startup-config
     parameters:
-      device: "name__value"
-    content_type: "text/plain"
-    targets: "device_config"
-    transformation: "device_config"
+      device: name__value
+    content_type: text/plain
+    targets: device_config
+    transformation: device_config
