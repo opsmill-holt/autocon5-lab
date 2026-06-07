@@ -1,0 +1,28 @@
+---
+# OtterNet NTP standard — the end state of Track 3 / Challenge 6, merged to
+# main through a Proposed Change. The standard NTP server is rolled out to the
+# London routers via the lon01-ntp profile; LON-RTR-02 keeps an explicit
+# override on top (set in 08_lon01_devices.yml). Addresses load first so the
+# profile can reference the standard one, and the profile loads before the
+# devices (08) that attach it.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: IpamIPAddress
+  data:
+    - address: "10.10.0.124/32"
+      ip_namespace: default
+      description: OtterNet standard NTP server
+    - address: "10.99.0.123/32"
+      ip_namespace: default
+      description: Legacy NTP server (LON-RTR-02 override)
+
+---
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: ProfileDcimDevice
+  data:
+    - profile_name: lon01-ntp
+      profile_priority: 1000
+      ntp_server: ["10.10.0.124/32", "default"]

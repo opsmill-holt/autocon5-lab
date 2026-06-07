@@ -7,6 +7,9 @@ spec:
     # London Site 01 — large campus: 2 routers, 2 dist switches, 4 access switches.
     # London is a LIVE site, so each device gets a management IP from the
     # 172.16.0.0/24 prefix (created in 07c_mgmt_ipam.yml, default namespace).
+    # Both routers carry the lon01-ntp profile (Track 3 / Challenge 6 end
+    # state, created in 07d_ntp_standards.yml); LON-RTR-02 overrides the
+    # profile's NTP server with an explicit legacy address.
     - name: LON-RTR-01
       status: active
       role: edge
@@ -14,6 +17,8 @@ spec:
       member_of_groups:
         - device_config
       primary_address: ["172.16.0.1/24", "default"]
+      profiles:
+        - lon01-ntp
 
     - name: LON-RTR-02
       status: active
@@ -22,6 +27,9 @@ spec:
       member_of_groups:
         - device_config
       primary_address: ["172.16.0.2/24", "default"]
+      ntp_server: ["10.99.0.123/32", "default"]
+      profiles:
+        - lon01-ntp
 
     - name: LON-DSW-01
       status: active
