@@ -22,9 +22,9 @@ class CampusSiteGenerator(InfrahubGenerator):
     async def generate(self, data: dict) -> None:
         site = data["LocationSite"]["edges"][0]["node"]
         site_id = site["id"]
-        # Site code is the 3-letter prefix of the shortname (muc-01 -> MUC), so
+        # Site code is the 3-letter prefix of the site name (muc-01 -> MUC), so
         # device names follow OtterNet's XXX-ROLE-NN convention (e.g. MUC-RTR-01).
-        site_code = site["shortname"]["value"].split("-")[0].upper()
+        site_code = site["name"]["value"].split("-")[0].upper()
 
         design = site["design"]["node"]
         if not design or "device_entries" not in design:

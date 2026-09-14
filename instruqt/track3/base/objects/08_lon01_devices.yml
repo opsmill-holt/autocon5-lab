@@ -13,7 +13,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.1/24", "default"]
+      primary_address: ["default", "172.16.0.1/24"]
 
     - name: LON-RTR-02
       status: active
@@ -21,7 +21,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.2/24", "default"]
+      primary_address: ["default", "172.16.0.2/24"]
 
     - name: LON-DSW-01
       status: active
@@ -29,7 +29,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.3/24", "default"]
+      primary_address: ["default", "172.16.0.3/24"]
 
     - name: LON-DSW-02
       status: active
@@ -37,7 +37,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.4/24", "default"]
+      primary_address: ["default", "172.16.0.4/24"]
 
     - name: LON-ASW-01
       status: active
@@ -45,7 +45,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.5/24", "default"]
+      primary_address: ["default", "172.16.0.5/24"]
 
     - name: LON-ASW-02
       status: active
@@ -53,7 +53,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.6/24", "default"]
+      primary_address: ["default", "172.16.0.6/24"]
 
     - name: LON-ASW-03
       status: active
@@ -61,7 +61,7 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.7/24", "default"]
+      primary_address: ["default", "172.16.0.7/24"]
 
     - name: LON-ASW-04
       status: active
@@ -69,4 +69,4 @@ spec:
       location: lon-01
       member_of_groups:
         - device_config
-      primary_address: ["172.16.0.8/24", "default"]
+      primary_address: ["default", "172.16.0.8/24"]

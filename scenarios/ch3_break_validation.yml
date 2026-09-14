@@ -5,8 +5,7 @@ spec:
   kind: LocationMetro
   data:
     - name: Bad Metro
-      shortname: bad-01
-      parent: uk
+      parent: United Kingdom
 ---
 apiVersion: infrahub.app/v1
 kind: Object
@@ -15,4 +14,4 @@ spec:
   data:
     - name: my-router-01
       status: active
-      location: bad-01
+      location: Bad Metro

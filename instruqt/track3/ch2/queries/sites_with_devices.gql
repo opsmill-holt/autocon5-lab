@@ -3,7 +3,7 @@ query SitesWithDevices {
     edges {
       node {
         id
-        shortname {
+        name {
           value
         }
         devices {

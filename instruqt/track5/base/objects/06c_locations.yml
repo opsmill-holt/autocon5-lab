@@ -1,46 +1,47 @@
 ---
+# OtterNet location hierarchy: Region -> Country -> Metro -> Site.
+# Sites are named by their short code (lon-01) because `name` is the unique
+# human-friendly id on LocationGeneric; the readable label lives in `description`.
 apiVersion: infrahub.app/v1
 kind: Object
 spec:
-  kind: LocationCountry
+  kind: LocationRegion
   data:
-    - name: United Kingdom
-      shortname: uk
-      timezone: Europe/London
+    - name: Europe
+      description: OtterNet EMEA region
       children:
-        kind: LocationMetro
+        kind: LocationCountry
         data:
-          - name: London
-            shortname: london
+          - name: United Kingdom
             children:
-              kind: LocationSite
+              kind: LocationMetro
               data:
-                - name: London Site 01
-                  shortname: lon-01
-                  description: OtterNet London primary site — large campus
-                  bgp_asn: 65500
+                - name: London
+                  children:
+                    kind: LocationSite
+                    data:
+                      - name: lon-01
+                        status: active
+                        timezone: Europe/London
+                        description: OtterNet London primary site — large campus
+                        bgp_asn: 65500
 
-    - name: Netherlands
-      shortname: nl
-      timezone: Europe/Amsterdam
-      children:
-        kind: LocationMetro
-        data:
-          - name: Amsterdam
-            shortname: amsterdam
+          - name: Netherlands
             children:
-              kind: LocationSite
+              kind: LocationMetro
               data:
-                - name: Amsterdam Site 01
-                  shortname: ams-01
-                  description: OtterNet Amsterdam site — medium campus
-                  bgp_asn: 65510
+                - name: Amsterdam
+                  children:
+                    kind: LocationSite
+                    data:
+                      - name: ams-01
+                        status: active
+                        timezone: Europe/Amsterdam
+                        description: OtterNet Amsterdam site — medium campus
+                        bgp_asn: 65510
 
-    - name: Germany
-      shortname: de
-      timezone: Europe/Berlin
-      children:
-        kind: LocationMetro
-        data:
-          - name: Munich
-            shortname: munich
+          - name: Germany
+            children:
+              kind: LocationMetro
+              data:
+                - name: Munich

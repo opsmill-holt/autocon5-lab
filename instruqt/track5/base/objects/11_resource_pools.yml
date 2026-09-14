@@ -15,7 +15,7 @@ spec:
         data:
           - prefix: "172.16.0.0/16"
             status: active
-            role: supernet
+            role: management
             description: OtterNet management address space
 ---
 apiVersion: infrahub.app/v1

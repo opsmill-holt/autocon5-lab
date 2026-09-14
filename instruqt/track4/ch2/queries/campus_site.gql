@@ -1,9 +1,9 @@
-query CampusSite($shortname: String!) {
-  LocationSite(shortname__value: $shortname) {
+query CampusSite($site_name: String!) {
+  LocationSite(name__value: $site_name) {
     edges {
       node {
         id
-        shortname {
+        name {
           value
         }
         mgmt_prefix {

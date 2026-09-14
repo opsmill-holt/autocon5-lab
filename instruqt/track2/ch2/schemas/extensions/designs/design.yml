@@ -121,7 +121,7 @@ extensions:
           kind: Text
           computed_attribute:
             kind: Jinja2
-            jinja2_template: "{{ shortname__value }}.mgmt.otternet.net"
+            jinja2_template: "{{ name__value }}.mgmt.otternet.net"
           read_only: true
           optional: true
           order_weight: 2055
