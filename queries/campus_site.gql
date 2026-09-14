@@ -1,5 +1,5 @@
-query CampusSite($site_name: String!) {
-  LocationSite(name__value: $site_name) {
+query CampusSite($name: String!) {
+  LocationSite(name__value: $name) {
     edges {
       node {
         id

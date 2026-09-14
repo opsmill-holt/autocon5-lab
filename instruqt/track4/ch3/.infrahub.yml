@@ -28,4 +28,4 @@ generator_definitions:
     targets: campus_sites
     class_name: CampusSiteGenerator
     parameters:
-      site_name: name__value
+      name: name__value
