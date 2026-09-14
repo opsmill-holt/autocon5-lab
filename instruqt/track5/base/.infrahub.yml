@@ -29,7 +29,7 @@ generator_definitions:
     targets: campus_sites
     class_name: CampusSiteGenerator
     parameters:
-      shortname: shortname__value
+      name: name__value
     # Event-driven in Track 5: a Group Trigger Rule runs this generator the moment a
     # site is added to campus_sites (on a branch), so it no longer runs inside the
     # Proposed Change pipeline — the PC is left to run checks and artifacts only.

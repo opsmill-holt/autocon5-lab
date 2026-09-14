@@ -18,7 +18,7 @@ query RouterConfig($device_name: String!) {
         location {
           node {
             ... on LocationSite {
-              shortname {
+              name {
                 value
               }
               bgp_asn {

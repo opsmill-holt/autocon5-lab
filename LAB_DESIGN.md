@@ -74,7 +74,7 @@ OtterNet-specific schema uses **generics and inheritance**:
   - `bgp_asn` — allocated by the Generator from a `CoreNumberPool` (not stored on the design)
   - `mgmt_prefix` — relationship to `IpamPrefix` (the site's `/24` management subnet); the Generator looks up the `CoreIPAddressPool` that references this prefix and allocates IPs from it
 
-- `DcimGenericDevice` has a **computed attribute** `fqdn` — dynamically calculated as `{{ name }}.{{ location__shortname }}.otternet.net`. This is never stored manually; Infrahub computes it on read.
+- `DcimGenericDevice` has a **computed attribute** `fqdn` — dynamically calculated as `{{ name }}.{{ location__name }}.otternet.net`. This is never stored manually; Infrahub computes it on read.
 
 ### IPAM & Resource Pool Seed Data
 
@@ -82,7 +82,7 @@ Pre-loaded alongside locations and devices:
 
 | Object | Kind | Purpose |
 |--------|------|---------|
-| `172.16.0.0/16` | `IpamPrefix` (supernet) | OtterNet management address space |
+| `172.16.0.0/16` | `IpamPrefix` (management) | OtterNet management address space |
 | `172.16.0.0/24` | `IpamPrefix` (management) | LON site management subnet |
 | `172.16.1.0/24` | `IpamPrefix` (management) | AMS site management subnet |
 | `172.16.2.0/24` | `IpamPrefix` (management) | MUC site management subnet |
@@ -119,7 +119,7 @@ Students extend the schema with OtterNet-specific design nodes:
 3. Create `OtnDataCenterSite` inheriting from `OtnSiteDesign` (and `CoreArtifactTarget`)
 4. Create `OtnDesignDeviceEntry` to link designs to device templates with a `count`; add `min_count: 1` and `max_count: 8` — try setting `count: 0` to see schema enforcement fire immediately (no Python needed)
 5. Extend `LocationSite` with a `design` relationship, a `bgp_asn` Number attribute, and a `mgmt_prefix` relationship to `IpamPrefix`
-6. Add a `fqdn` **computed attribute** to `DcimGenericDevice` using the template `{{ name }}.{{ location__shortname }}.otternet.net` — Infrahub calculates this dynamically on every read; it is never stored manually
+6. Add a `fqdn` **computed attribute** to `DcimGenericDevice` using the template `{{ name }}.{{ location__name }}.otternet.net` — Infrahub calculates this dynamically on every read; it is never stored manually
 7. Populate 3 campus design instances (small, medium, large) + 1 DC design instance, each with `OtnDesignDeviceEntry` records that map to the correct device templates and counts
 8. Link `lon-01` → `large-campus` and `ams-01` → `medium-campus`
 
@@ -142,7 +142,7 @@ Students query OtterNet data and observe enforcement in action:
 | Layer | Trigger | What fires |
 |-------|---------|-----------|
 | Schema | Set `OtnDesignDeviceEntry.count` to `0` | Immediate rejection — `min_count: 1` |
-| Uniqueness | Create a second site with shortname `lon-01` | Uniqueness constraint, no Python needed |
+| Uniqueness | Create a second site named `lon-01` | Uniqueness constraint, no Python needed |
 | Referential integrity | Create a device with no location | Referential integrity check |
 | Regex (schema) | Set a device hostname to `my-router` | Schema regex `^[A-Z]{3}-[A-Z]{2,5}-\d{2}$` rejects it |
 | Python check (async) | Proposed change with bad data | `CheckDeviceHostname` and `CheckDeviceSite` fire and block merge |

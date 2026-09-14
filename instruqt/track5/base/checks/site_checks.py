@@ -15,7 +15,7 @@ class CheckSiteHasBorderRouter(InfrahubCheck):
     def validate(self, data: dict) -> None:
         for edge in data["LocationSite"]["edges"]:
             site = edge["node"]
-            shortname = site["shortname"]["value"]
+            site_name = site["name"]["value"]
             devices = site["devices"]["edges"]
             if not devices:
                 continue  # site not provisioned yet — nothing to enforce
@@ -27,7 +27,7 @@ class CheckSiteHasBorderRouter(InfrahubCheck):
             )
             if not has_border:
                 self.log_error(
-                    f"Site '{shortname}' has devices but no active edge "
+                    f"Site '{site_name}' has devices but no active edge "
                     f"(border) router. Every provisioned site must have one "
                     f"before merging.",
                     object_id=site["id"],

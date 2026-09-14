@@ -4,23 +4,20 @@ kind: Object
 spec:
   kind: LocationSite
   data:
-    - name: London Site 01
-      shortname: lon-01
-      parent: london
+    - name: lon-01
+      parent: London
       mgmt_prefix:
+        - "default"
         - "172.16.1.0/24"
-        - "default"
 
-    - name: Amsterdam Site 01
-      shortname: ams-01
-      parent: amsterdam
+    - name: ams-01
+      parent: Amsterdam
       mgmt_prefix:
+        - "default"
         - "172.16.2.0/24"
-        - "default"
 
-    - name: Munich Site 01
-      shortname: muc-01
-      parent: munich
+    - name: muc-01
+      parent: Munich
       mgmt_prefix:
-        - "172.16.3.0/24"
         - "default"
+        - "172.16.3.0/24"

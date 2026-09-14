@@ -129,7 +129,7 @@ extensions:
           order_weight: 2055
           computed_attribute:
             kind: Jinja2
-            jinja2_template: "{{ shortname__value }}.mgmt.otternet.net"
+            jinja2_template: "{{ name__value }}.mgmt.otternet.net"
       relationships:
         - name: design
           label: Site Design

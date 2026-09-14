@@ -1,7 +1,7 @@
 {% set device = data["DcimDevice"]["edges"][0]["node"] %}
 {% set location = device["location"]["node"] %}
 ! Managed by OtterNet SoT
-! Site: {{ location.get("shortname", {}).get("value", "unknown") if location else "unknown" }}
+! Site: {{ location.get("name", {}).get("value", "unknown") if location else "unknown" }}
 !
 hostname {{ device["name"]["value"] }}
 fqdn {{ device["fqdn"]["value"] }}

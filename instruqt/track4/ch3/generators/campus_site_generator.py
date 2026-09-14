@@ -16,7 +16,7 @@ class CampusSiteGenerator(InfrahubGenerator):
         site = data["LocationSite"]["edges"][0]["node"]
         site_id = site["id"]
         # muc-01 -> MUC, so device names follow OtterNet's XXX-ROLE-NN convention.
-        site_code = site["shortname"]["value"].split("-")[0].upper()
+        site_code = site["name"]["value"].split("-")[0].upper()
 
         design = site["design"]["node"]
         if not design or "device_entries" not in design:
@@ -47,7 +47,7 @@ class CampusSiteGenerator(InfrahubGenerator):
         mgmt_pool = await self.client.create(
             kind="CoreIPAddressPool",
             data={
-                "name": f"{site['shortname']['value']}-mgmt-pool",
+                "name": f"{site['name']['value']}-mgmt-pool",
                 "default_address_type": "IpamIPAddress",
                 "default_prefix_length": 32,
                 "ip_namespace": "default",

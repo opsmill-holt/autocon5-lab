@@ -27,7 +27,7 @@ generator_definitions:
     targets: campus_sites
     class_name: CampusSiteGenerator
     parameters:
-      shortname: shortname__value
+      name: name__value
 
 jinja2_transforms:
   - name: router_config
