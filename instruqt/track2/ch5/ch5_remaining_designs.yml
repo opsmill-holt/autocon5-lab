@@ -1,7 +1,7 @@
 ---
-# Track 2 ch5: the designs the student does NOT build by hand. The student
-# creates small-campus (and its device entries) in the UI; this file loads the
-# rest so all four designs exist without duplicating small-campus's entries.
+# The other three site designs. You create small-campus (and its device
+# entries) in the UI; this file loads medium-campus, large-campus and
+# dc-standard, with their device entries, so all four designs exist.
 apiVersion: infrahub.app/v1
 kind: Object
 spec:
