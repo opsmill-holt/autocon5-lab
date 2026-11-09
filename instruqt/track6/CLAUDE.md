@@ -46,5 +46,5 @@ The Python environment in `/playground/.venv` has `infrahubctl` and the Infrahub
 
 - Work on a branch. Every command that changes schema or data takes `--branch <name>`. Never load to `main`: changes reach `main` only through a proposed change that a person reviews and merges.
 - New attributes on existing nodes are `optional: true` or have a `default_value`, because existing nodes have no value for them.
-- Show the diff before you commit. Commit only the files the task changed, then push to the branch of the same name on `origin`.
+- Do not commit or push unless the user asks. The user reviews the diff first. When asked, commit only the files the task changed, then push to the branch of the same name on `origin`.
 - Do not commit `.mcp.json`: it holds an API token.
