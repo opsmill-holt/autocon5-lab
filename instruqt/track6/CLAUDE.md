@@ -44,6 +44,7 @@ The Python environment in `/playground/.venv` has `infrahubctl` and the Infrahub
 
 ## Rules
 
+- Keep replies short. The user is a workshop student reading in a narrow terminal. After a task, say in a few lines what you changed and what the user should check. Do not repeat the diff, summarize whole files or list next steps nobody asked for.
 - Work on a branch. Every command that changes schema or data takes `--branch <name>`. Never load to `main`: changes reach `main` only through a proposed change that a person reviews and merges.
 - New attributes on existing nodes are `optional: true` or have a `default_value`, because existing nodes have no value for them.
 - Do not commit or push unless the user asks. The user reviews the diff first. When asked, commit only the files the task changed, then push to the branch of the same name on `origin`.
