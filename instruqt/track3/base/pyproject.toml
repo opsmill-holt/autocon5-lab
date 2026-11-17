@@ -6,7 +6,7 @@ authors = []
 readme = "README.md"
 requires-python = ">=3.10, <3.15"
 dependencies = [
-    "infrahub-sdk[all]==1.21.1",
+    "infrahub-sdk[all]",
     "invoke>=3.0.3",
 ]
 
