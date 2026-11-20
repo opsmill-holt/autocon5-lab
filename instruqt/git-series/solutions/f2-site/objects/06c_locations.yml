@@ -1,0 +1,49 @@
+---
+# OtterNet location hierarchy: Region -> Country -> Metro -> Site.
+# Sites are named by their short code (lon-01) because `name` is the unique
+# human-friendly id on LocationGeneric; the readable label lives in `description`.
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: LocationRegion
+  data:
+    - name: Europe
+      description: OtterNet EMEA region
+      children:
+        kind: LocationCountry
+        data:
+          - name: United Kingdom
+            children:
+              kind: LocationMetro
+              data:
+                - name: London
+                  children:
+                    kind: LocationSite
+                    data:
+                      - name: lon-01
+                        status: active
+                        timezone: Europe/London
+                        description: OtterNet London primary site — large campus
+                        bgp_asn: 65500
+                        ntp_pool: uk.pool.ntp.org
+
+          - name: Netherlands
+            children:
+              kind: LocationMetro
+              data:
+                - name: Amsterdam
+                  children:
+                    kind: LocationSite
+                    data:
+                      - name: ams-01
+                        status: active
+                        timezone: Europe/Amsterdam
+                        description: OtterNet Amsterdam site — medium campus
+                        bgp_asn: 65510
+                        ntp_pool: nl.pool.ntp.org
+
+          - name: Germany
+            children:
+              kind: LocationMetro
+              data:
+                - name: Munich

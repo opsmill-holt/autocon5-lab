@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://schema.infrahub.app/infrahub/schema/latest.json
+version: "1.0"
+
+extensions:
+  nodes:
+    - kind: DcimDevice
+      attributes:
+        - name: login_banner
+          label: Login Banner
+          kind: Text
+          optional: true
+          default_value: "Authorized access only"

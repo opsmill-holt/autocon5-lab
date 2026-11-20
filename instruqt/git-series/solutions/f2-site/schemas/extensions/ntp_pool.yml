@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://schema.infrahub.app/infrahub/schema/latest.json
+version: "1.0"
+
+extensions:
+  nodes:
+    - kind: LocationSite
+      attributes:
+        - name: ntp_pool
+          label: NTP Pool
+          kind: Text
+          optional: true

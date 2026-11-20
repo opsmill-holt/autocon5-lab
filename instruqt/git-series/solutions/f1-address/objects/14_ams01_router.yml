@@ -1,0 +1,14 @@
+---
+# Feature 1: a second edge router at Amsterdam (ams-01).
+apiVersion: infrahub.app/v1
+kind: Object
+spec:
+  kind: DcimDevice
+  data:
+    - name: AMS-RTR-02
+      status: active
+      role: edge
+      location: ams-01
+      member_of_groups:
+        - device_config
+      primary_address: ["default", "172.16.1.5/24"]
