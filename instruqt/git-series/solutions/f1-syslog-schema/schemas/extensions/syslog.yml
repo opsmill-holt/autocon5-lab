@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://schema.infrahub.app/infrahub/schema/latest.json
+version: "1.0"
+
+extensions:
+  nodes:
+    - kind: LocationSite
+      attributes:
+        - name: syslog_server
+          label: Syslog Server
+          kind: Text
+          optional: true
+          default_value: "10.0.0.50"

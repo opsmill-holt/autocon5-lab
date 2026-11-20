@@ -27,6 +27,9 @@ query DeviceConfig($device: String!) {
               mgmt_domain {
                 value
               }
+              syslog_server {
+                value
+              }
               ntp_pool {
                 value
               }
