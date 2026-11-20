@@ -14,11 +14,11 @@ relative to the lab root. Steps are applied in order.
 
 | Step | Feature | Used by |
 |---|---|---|
-| `f1-router` | 1: router AMS-RTR-02 at ams-01, no management address | track 1 solve; tracks 2 and 3 setup |
-| `f1-address` | 1: 172.16.1.5/24 as primary address of AMS-RTR-02 | track 1 solve; tracks 2 and 3 setup |
+| `f1-syslog-schema` | 1: `syslog_server` with a default value on LocationSite | track 1 solve; tracks 2 and 3 setup |
+| `f1-syslog-config` | 1: `logging host` in the router config query and template | track 1 solve; tracks 2 and 3 setup |
 | `f2-device` | 2: `ntp_pool` on DcimDevice (first try) | track 2 solve |
 | `f2-site` | 2: `ntp_pool` moved to LocationSite | track 2 solve; track 3 setup |
 | `f3-login-banner` | 3: `login_banner` with a default value on DcimDevice | track 3 setup |
 
-`f3-login-banner` builds on `f2-site` (query and template). All steps were
+Each step's query and template build on the steps before it: `f2-*` on `f1-syslog-config`, `f3-login-banner` on `f2-site`. All steps were
 imported and rendered on Infrahub 1.12.1.
